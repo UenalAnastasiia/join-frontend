@@ -1,0 +1,60 @@
+<mat-card class="container-style container-position">
+    <div class="card-header">
+        <div>
+            <h1>Archiv</h1>
+            <h3>Archived Task</h3>
+        </div>
+
+        <div>
+            <span class="search-input">
+                <input name="search" [(ngModel)]="searchInput" matInput autocomplete="off" placeholder="Search for...">
+                <mat-icon>search</mat-icon>
+            </span>
+        </div>
+    </div>
+
+    <div class="tasks-box">
+        <div *ngIf="noTasks" class="noTasks-box">
+            <h3>No tasks archived...</h3>
+        </div>
+
+        <div *ngFor="let task of archivedTasks | filter:searchInput">
+            <div class="task-card hide-icons">
+                <div class="hover-icons">
+                    <mat-icon matTooltip="History" matTooltipPosition="above"
+                        matTooltipClass="tooltip-blue">history</mat-icon>
+
+                    <mat-icon matTooltip="Delete task" matTooltipPosition="above" matTooltipClass="tooltip-blue"
+                        (click)="openDialogDeleteTask(task.id)">delete</mat-icon>
+                </div>
+
+                <span class="task-category" [style.background-color]="shared.getCategoryColor(task.category)">
+                    {{ task.category }}</span>
+
+                <div (click)="openTaskDetails(task.id)">
+                    <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
+                        {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy"
+                        }}
+                        <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
+                    </span>
+                    <h4 class="task-name">{{ task.title }}</h4>
+                    <div>
+                        <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
+                            {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                        <mat-icon style="color: #7AE229"
+                            *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
+                        <mat-icon style="color: #FF3D00"
+                            *ngIf="task.priority==='urgent'">keyboard_double_arrow_up</mat-icon>
+                        <mat-icon style="color: #FFA800" *ngIf="task.priority==='medium'">clear_all</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-btn" (click)="openDialogDeleteAllTasks(archivedTasks)">
+        <button mat-raised-button>
+            <mat-icon>delete</mat-icon> Clean Archiv
+        </button>
+    </div>
+</mat-card>

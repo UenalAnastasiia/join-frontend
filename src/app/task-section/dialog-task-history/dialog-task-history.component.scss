@@ -1,0 +1,39 @@
+::ng-deep .mat-dialog-container {
+    border-radius: 24px;
+    background-color: #EBECF0 !important;
+}
+
+.history-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    right: -16px;
+    top: -20px;
+    color: var(--header);
+}
+
+.history-h {
+    h1 {
+        margin-bottom: 16px;
+        font-size: 24px;
+        border-right: none;
+        margin-top: 0;
+        color: var(--header);
+        font-weight: 600;
+
+    }
+}
+
+.history-message {
+    margin-bottom: 8px;
+
+    span {
+        &:first-child {
+            font-weight: 600;
+        }
+    }
+}

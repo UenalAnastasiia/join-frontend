@@ -1,0 +1,50 @@
+<div class="spinner-box" *ngIf="loadSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="add-task-container">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="task-h">
+        <h1>Add contact</h1>
+    </div>
+
+    <div class="task-box">
+        <mat-form-field class="input-shadow input-box height-36">
+            <input matInput type="text" placeholder="First Name" [(ngModel)]="contact.firstName"
+                [formControl]="firstName" autocomplete="off">
+            <mat-icon>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field class="input-shadow input-box height-36">
+            <input matInput type="text" placeholder="Last Name" [(ngModel)]="contact.lastName" [formControl]="lastName"
+                autocomplete="off">
+            <mat-icon>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field class="input-shadow input-box height-36">
+            <input matInput type="text" placeholder="E-Mail" [(ngModel)]="contact.email" [formControl]="email"
+                autocomplete="off">
+            <mat-icon>mail</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field class="input-shadow input-box height-36">
+            <input matInput type="text" placeholder="Phone" [(ngModel)]="contact.phone" [formControl]="phone"
+                autocomplete="off">
+            <mat-icon>phone</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <div class="button-box">
+        <div (click)="clearForm()" matTooltip="Reset" matTooltipPosition="below" matTooltipClass="tooltip-blue">
+            <mat-icon>cleaning_services</mat-icon>
+        </div>
+
+        <div matTooltip="Save" matTooltipPosition="below" matTooltipClass="tooltip-blue" (click)="saveContact()"
+            [class.disabled]="!firstName.valid || !lastName.valid || !email.valid || !phone.valid">
+            <mat-icon>done</mat-icon>
+        </div>
+    </div>
+</div>

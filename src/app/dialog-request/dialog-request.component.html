@@ -1,0 +1,74 @@
+<div *ngIf="addTask" class="request-box">
+    <h1>Task created!</h1>
+
+    <div class="btn-box">
+        <div routerLink="/board" (click)="dialog.closeAll()">Open Board</div>
+        <div (click)="dialogRef.close()">Add new task</div>
+    </div>
+</div>
+
+<div *ngIf="archivTask" class="request-box">
+    <h1>Are you sure?</h1>
+
+    <div class="btn-box">
+        <div (click)="dialogRef.close()">Cancel</div>
+        <div (click)="archivedTask()">Archived task</div>
+    </div>
+</div>
+
+<div *ngIf="addContact" class="request-box">
+    <h1>Contact created!</h1>
+
+    <div class="btn-box">
+        <div routerLink="/contact" (click)="dialog.closeAll()">Open List</div>
+        <div (click)="dialogRef.close()">Add new contact</div>
+    </div>
+</div>
+
+<div *ngIf="deleteContact" class="request-box">
+    <h1>Are you sure?</h1>
+
+    <div class="btn-box">
+        <div (click)="dialogRef.close()">Cancel</div>
+        <div (click)="deleteContactDoc()">Delete contact</div>
+    </div>
+</div>
+
+<div *ngIf="deleteTask" class="request-box">
+    <h1>Are you sure?</h1>
+
+    <div class="btn-box">
+        <div (click)="dialogRef.close()">Cancel</div>
+        <div (click)="deleteTaskDoc()">Delete task</div>
+    </div>
+</div>
+
+<div *ngIf="deleteAllTasks" class="request-box">
+    <h1>Are you sure?</h1>
+
+    <div class="btn-box">
+        <div (click)="dialogRef.close()">Cancel</div>
+        <div (click)="deleteAllTasksFromArchiv()">Clean Archiv</div>
+    </div>
+</div>
+
+<div *ngIf="resetDialog" class="request-box">
+    <h1>Enter Your E-Mail</h1>
+
+    <mat-form-field class="input-shadow input-box height-36">
+        <input matInput placeholder="E-Mail" #resetEmail required [formControl]="email" autocomplete="off">
+    </mat-form-field>
+
+    <p *ngIf="auth.errorResetMessage" class="error">
+        {{ auth.errorResetMessage }}
+    </p>
+
+    <div class="btn-box">
+        <div (click)="dialogRef.close()">Cancel</div>
+        <div>
+            <button mat-button (click)="auth.resetPassword(resetEmail.value)" [disabled]="!email.valid">
+                Send E-Mail
+            </button>
+        </div>
+    </div>
+</div>

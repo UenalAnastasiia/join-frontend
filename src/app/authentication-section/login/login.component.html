@@ -1,0 +1,71 @@
+<div class="register-container">
+    <div class="info-box">
+        <button mat-icon-button [matMenuTriggerFor]="infoMenu">
+            <mat-icon>information</mat-icon>
+        </button>
+
+        <mat-menu #infoMenu="matMenu" yPosition="above">
+            <button mat-menu-item routerLink="/imprint">Imprint</button>
+            <button mat-menu-item routerLink="/data-protection">Data Protection</button>
+        </mat-menu>
+    </div>
+    <div class="logo-box">
+        <h1>Join</h1>
+    </div>
+
+    <mat-card class="login-card">
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="formLogin">
+                <p>
+                    <mat-form-field class="input-shadow input-box height-36">
+                        <input type="text" matInput placeholder="E-Mail" formControlName="email" required
+                            autocomplete="off">
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field class="input-shadow input-box height-36">
+                        <input type="password" matInput placeholder="Password" formControlName="password" required
+                            autocomplete="off">
+                    </mat-form-field>
+                </p>
+
+                <p *ngIf="error" class="error">
+                    {{ error }}
+                </p>
+
+                <div class="display-center">
+                    <div class="signIn-btn" (click)="loginUser()">
+                        Sign in
+                    </div>
+                </div>
+            </form>
+
+            <p class="or-text">
+                <span>OR</span>
+            </p>
+
+            <div class="login-options-btn">
+                <button mat-button (click)="signInWithGoogle()">
+                    <img src="/../assets/img/google.png">
+                    Login with Google
+                </button>
+
+                <button mat-button (click)="guestLogin()">
+                    <mat-icon class="icon-guest">psychology_alt</mat-icon> Login as Guest
+                </button>
+            </div>
+        </mat-card-content>
+
+        <p class="or-text sign-up-btn">
+            <label class="form-label"> Don't have an account?
+                <button mat-button routerLink="/register" class="text-danger">Sign up</button>
+            </label>
+
+            <label class="form-label"> Forgot password?
+                <button mat-button (click)="openDialogResetPassword()" class="text-danger">Reset password</button>
+            </label>
+        </p>
+    </mat-card>
+</div>

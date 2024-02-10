@@ -1,0 +1,230 @@
+$fontFamily: 'Montserrat', sans-serif;
+$fontSize: 14px;
+$textColor: #6C7587;
+
+// $height: 54px;
+$height: 32px;
+
+$bgColor: #EBECF0;
+$iconColor: #8992A5;
+
+$accentBlue: #1657F0;
+$brightBlue: #36D7E0;
+
+$darkShadow: #484f60;
+$lightShadow: #FFFFFF;
+
+$dropShadow: 8px 8px 12px -2px rgba($darkShadow, 0.4),
+    -6px -6px 12px -1px rgba($lightShadow, 1);
+
+$innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
+    inset 2px 2px 8px -1px rgba($darkShadow, 0.5);
+
+.register-container {
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-image: url('/../assets/img/bg1.jpg');
+}
+
+.login-card {
+    width: max-content;
+    height: max-content;
+    border-radius: 24px;
+    padding: 28px;
+    background: #ebecf0d9;
+}
+
+.mat-card-title {
+    margin-bottom: 16px;
+    font-size: 24px;
+    border-right: none;
+    margin-top: 0;
+    margin-left: 8px;
+    color: var(--header);
+    font-weight: 600;
+}
+
+mat-form-field {
+    width: 350px;
+
+    @media (max-width: 400px) {
+        width: 270px;
+    }
+
+    @media (max-width: 320px) {
+        width: 240px;
+    }
+}
+
+.login-options-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+        cursor: pointer !important;
+        width: fit-content;
+    }
+
+    img {
+        height: 18px;
+        margin-right: 8px;
+    }
+}
+
+.or-text {
+    margin-top: 28px;
+    border-top: 1px solid #c3c0c0;
+    padding-top: 6px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    span {
+        padding: 4px;
+        background: #ebecf0d9;
+        position: absolute;
+        top: -14px;
+
+        @media (max-width: 400px) {
+            right: 120px;
+        }
+
+        @media (max-width: 320px) {
+            right: 105px;
+        }
+    }
+}
+
+.sign-up-btn {
+    font-size: 12px;
+}
+
+.signIn-btn {
+    @extend %shared-styles;
+    box-shadow: $dropShadow;
+    cursor: pointer;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px !important;
+    color: var(--font) !important;
+    background: #647dfe69 !important;
+    width: fit-content;
+
+    &:active {
+        box-shadow: $innerShadow;
+        border-color: rgba($lightShadow, 0);
+    }
+
+    &:hover {
+        border: 2px solid white !important;
+    }
+}
+
+.icon-guest {
+    margin-right: 4px;
+    margin-top: -4px;
+}
+
+.display-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+@mixin applyFontStyle() {
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    line-height: $fontSize;
+    color: $textColor;
+}
+
+%shared-styles {
+    @include applyFontStyle;
+    padding: 0 8px;
+    position: relative;
+    border: 2px solid rgba($lightShadow, 0);
+    outline: none;
+    text-align: start;
+    background-color: $bgColor;
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+        box-shadow: none;
+        border-color: white;
+    }
+}
+
+.input-shadow {
+    @extend %shared-styles;
+    box-shadow: $innerShadow;
+    width: 28vw;
+    padding: 10px;
+    border-radius: 12px;
+
+    &:focus {
+        box-shadow: none;
+        border-color: rgba(var(--header), 0.5);
+    }
+
+    &::placeholder {
+        @include applyFontStyle;
+        opacity: 1;
+    }
+
+    mat-hint {
+        font-size: 10px !important;
+    }
+
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        height: 36px;
+        padding-bottom: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    mat-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.height-36 {
+    height: 36px !important;
+    margin-bottom: 14px;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    color: var(--header) !important;
+}
+
+::ng-deep .mat-form-field-underline {
+    background-color: $bgColor !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+    background-color: $bgColor !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
+    display: flex !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: var(--header) !important;
+}

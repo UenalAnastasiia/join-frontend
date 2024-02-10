@@ -1,0 +1,195 @@
+.card-header h1 {
+    width: 200px;
+}
+
+.summary-body {
+    display: flex;
+    align-items: center;
+    width: 80vw;
+    margin-top: 20px;
+}
+
+.summary-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 35vw;
+    height: 65vh;
+    margin-left: 5vw;
+
+    div {
+        display: flex;
+    }
+}
+
+.task-overview,
+.done-cards,
+.deadline-card {
+    display: flex;
+    justify-content: space-between;
+    width: 40vw;
+
+    mat-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--font);
+        border-radius: 24px;
+        z-index: 1;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+        span {
+            text-align: center;
+            font-size: 16px;
+
+            &:first-child {
+                font-size: 56px;
+                font-weight: 600;
+            }
+        }
+
+        &:hover {
+            transform: scale3d(1.1, 1.1, 1.1);
+            transition: 225ms ease-in-out;
+            cursor: pointer;
+        }
+    }
+}
+
+.task-overview {
+    mat-card {
+        height: 90px;
+        width: 150px;
+        flex-direction: column;
+    }
+}
+
+.deadline-card {
+    mat-card {
+        height: 90px;
+        width: 100%;
+        justify-content: space-around;
+
+        .urgent-icon {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid var(--font);
+
+            mat-icon {
+                height: 56px;
+                width: 60px;
+                font-size: 48px;
+                padding: 8px;
+                background: #eb4141;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            div {
+                &:last-child {
+                    flex-direction: column;
+                    margin-left: 20px;
+                    margin-top: 12px;
+                }
+            }
+        }
+
+        .urgent-date {
+            display: flex;
+            flex-direction: column;
+
+            h4 {
+                margin: 0;
+
+                &:first-child {
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                }
+            }
+        }
+    }
+}
+
+.done-cards {
+    display: flex;
+
+    mat-card {
+        height: 90px;
+        width: 17vw;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            height: 100%;
+
+            &:last-child {
+                margin-top: 12px;
+            }
+
+            mat-icon {
+                height: 56px;
+                width: 60px;
+                font-size: 48px;
+                padding: 8px;
+                background: var(--font);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+}
+
+.greeting {
+    width: 40vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+        font-size: 42px;
+        color: white;
+        margin-top: 24px;
+
+        &:last-child {
+            color: var(--header);
+            font-weight: 600;
+            margin-left: 16px;
+            margin-top: 0;
+
+            mat-icon {
+                font-size: 28px;
+                color: #c2a083;
+            }
+        }
+    }
+}
+
+.context {
+    z-index: 2;
+    position: absolute;
+    top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    margin-top: 24px;
+    margin-bottom: 48px;
+}

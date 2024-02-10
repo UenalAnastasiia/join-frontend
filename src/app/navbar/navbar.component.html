@@ -1,0 +1,56 @@
+<div class="nav-bg">
+    <nav class="nav-top">
+        <div class="btn-box-top">
+            <button mat-button *ngFor="let button of btnTop" routerLink="/{{ button.name }}"
+                routerLinkActive="active-btn-top">
+                <mat-icon>{{ button.icon }}</mat-icon>
+                {{ button.name[0].toUpperCase() }}{{ button.name.slice(1).toLowerCase() }}
+            </button>
+        </div>
+
+        <button mat-icon-button class="help-btn" matTooltip="Help" matTooltipPosition="above"
+            matTooltipClass="tooltip-blue" routerLink="/help">
+            <mat-icon>question_mark</mat-icon>
+        </button>
+    </nav>
+
+    <nav class="nav-left">
+        <div class="logo-box">
+            <h1>Join</h1>
+        </div>
+
+        <div class="btn-box-left">
+            <button routerLink="/calendar" mat-icon-button matTooltip="Open Calendar" matTooltipPosition="right"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>calendar_month</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="Add Task" matTooltipPosition="right" matTooltipClass="tooltip-blue"
+                (click)="openDialogAddTask('To do')">
+                <mat-icon>note_add</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="Add Contact" matTooltipPosition="right" matTooltipClass="tooltip-blue"
+                (click)="openDialogAddContact()">
+                <mat-icon>person_add</mat-icon>
+            </button>
+
+            <button routerLink="/archiv" mat-icon-button matTooltip="Open Archive" matTooltipPosition="right"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>archive</mat-icon>
+            </button>
+        </div>
+
+        <div class="account">
+            <button mat-icon-button matTooltip="{{ auth.userName || 'Guest'}}"
+                matTooltipPosition="above" matTooltipClass="tooltip-blue" [matMenuTriggerFor]="userMenu">
+                <img src="{{ auth.userImg || 'assets/img/profile.png'}}" alt="">
+            </button>
+
+            <mat-menu #userMenu="matMenu" yPosition="above">
+                <button mat-menu-item (click)="logOut()">
+                    <mat-icon>logout</mat-icon> Log Out</button>
+            </mat-menu>
+        </div>
+    </nav>
+</div>

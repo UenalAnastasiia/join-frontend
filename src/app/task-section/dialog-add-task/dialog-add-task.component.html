@@ -1,0 +1,90 @@
+<div class="spinner-box" *ngIf="loadSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="add-task-container">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="task-h">
+        <h1>Add task</h1>
+    </div>
+
+    <div class="task-box">
+        <div class="left-box">
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="Title" [(ngModel)]="task.title" [formControl]="title"
+                autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field class="input-shadow input-box">
+                <textarea class="textarea-input" matInput type="text" placeholder="Description"
+                    [(ngModel)]="task.description" [formControl]="description"
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+
+            <div class="input-box">
+                <select class="description-option input-shadow" [(ngModel)]="selectedCategory"
+                    (change)="selectOptions()" [formControl]="category">
+                    <option [ngValue]="undefined" [disabled]="true">Choose category...</option>
+                    <option value="{{ category }}" *ngFor="let category of categoryList">{{ category }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="right-box">
+            <mat-form-field class="input-shadow input-box height-36">
+                <mat-label for="dueDate">Due Date</mat-label>
+                <input #dateInput [min]="minDate" matInput [matDatepicker]="picker" placeholder="mm/dd/yyyy"
+                    [(ngModel)]="dueDate" [formControl]="datepicker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="priotity-section">
+                <mat-form-field class="input-shadow input-box hover-prio">
+                    <mat-label *ngIf="clickPriority">Priority</mat-label>
+                    <input [(ngModel)]="task.priority" matInput class="d-none">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="task.priority" [formControl]="priority">
+                        <div *ngFor="let button of priorityBtn" class="btn-shadow">
+                            <mat-radio-button class="example-radio-button" value="{{ button.name }}"
+                                (click)="clickPriority = true" class="capitalize">
+                                {{ button.name }}
+                                <mat-icon class="{{ button.name }}-btn">{{ button.icon }}</mat-icon>
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                </mat-form-field>
+            </div>
+
+            <div class="input-box pos-rel">
+                <input readonly *ngIf="!hideHolder" class="input-holder" matInput [(ngModel)]="contactName">
+                <select class="description-option input-shadow" [(ngModel)]="selectedContact"
+                    (change)="getSelectedContact(selectedContact)" [formControl]="assignedTo">
+                    <option [ngValue]="undefined" [disabled]="true">Assigned to...</option>
+                    <option [ngValue]="contact" *ngFor="let contact of allContacts">
+                        {{ contact.firstName }} {{ contact.lastName }}</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <select class="description-option input-shadow" [(ngModel)]="task.status" (change)="selectOptions()">
+                    <option value="" disabled selected>Choose status...</option>
+                    <option value="{{ stat }}" *ngFor="let stat of statusList">{{ stat }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-box">
+        <div (click)="clearForm()" matTooltip="Reset" matTooltipPosition="below" matTooltipClass="tooltip-blue">
+            <mat-icon>cleaning_services</mat-icon>
+        </div>
+
+        <div (click)="saveTask()" matTooltip="Save" matTooltipPosition="below" matTooltipClass="tooltip-blue"
+        [class.disabled]="!title.valid || !description.valid || !category.valid || !datepicker.valid || !priority.valid || !assignedTo.valid">
+            <mat-icon>done</mat-icon>
+        </div>
+    </div>
+</div>

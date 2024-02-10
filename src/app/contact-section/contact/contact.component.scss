@@ -1,0 +1,212 @@
+$fontSize: 16px;
+$textColor: #6C7587;
+
+$height: 54px;
+
+$bgColor: #EBECF0;
+$iconColor: #8992A5;
+
+$darkShadow: #484f60;
+$lightShadow: #FFFFFF;
+
+$dropShadow: 8px 8px 12px -2px rgba($darkShadow, 0.4),
+    -6px -6px 12px -1px rgba($lightShadow, 1);
+
+$innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
+    inset 2px 2px 8px -1px rgba($darkShadow, 0.5);
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 36px !important;
+
+    h1 {
+        width: 170px;
+    }
+}
+
+.contact-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.contact-list-box {
+    width: 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background: #ffffff1f;
+    border-radius: 24px;
+    margin-top: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.box-height {
+    height: 75vh;
+    width: 80%;
+    overflow-y: auto;
+}
+
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    color: var(--font);
+    margin: 6px;
+    min-width: 260px;
+}
+
+.info-box {
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 12px;
+
+    &:hover {
+        background: #292F4F !important;
+        color: var(--bg-light);
+        cursor: pointer;
+    }
+}
+
+.activeElm {
+    background: #292F4F !important;
+    color: var(--bg-light);
+    cursor: pointer;
+}
+
+.contact-symbol {
+    background: #9327FF;
+    color: white;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 600;
+    width: fit-content;
+    height: fit-content;
+    padding: 8px;
+    margin-right: 16px;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    min-width: 180px;
+
+    span {
+        &:last-child {
+            color: var(--header);
+        }
+    }
+}
+
+.letter-header {
+    border-bottom: 1px solid #4b55855e;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    h2 {
+        margin-bottom: 6px;
+        padding-left: 24px;
+    }
+}
+
+.add-btn {
+    button {
+        position: absolute;
+        bottom: 46px;
+        right: 46px;
+        background: var(--header);
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: inset 2px 2px 0px var(--bg-light),
+            inset -1px -1px 11px #ffffff;
+
+        &:hover {
+            transform: scale3d(1.1, 1.1, 1.1);
+            transition: 225ms ease-in-out;
+        }
+    }
+
+    mat-icon {
+        margin-top: -5px;
+        margin-left: 8px;
+    }
+}
+
+@mixin applyFontStyle() {
+    font-size: $fontSize;
+    line-height: $fontSize;
+    color: $textColor;
+}
+
+%shared-styles {
+    @include applyFontStyle;
+    padding: 0 8px;
+    position: relative;
+    border: 2px solid rgba($lightShadow, 0);
+    outline: none;
+    text-align: start;
+    background-color: var(--bg-light);
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+        box-shadow: none;
+        border-color: rgba($lightShadow, 0.5);
+    }
+}
+
+.search-input {
+    @extend %shared-styles;
+    box-shadow: $innerShadow;
+    width: 15vw;
+    padding: 6px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+
+    &::placeholder {
+        @include applyFontStyle;
+        opacity: 1;
+    }
+
+    &:focus {
+        box-shadow: none;
+        border-color: rgba($lightShadow, 0.5);
+    }
+
+    input {
+        border: none;
+        background: var(--bg-light);
+        color: var(--font);
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    mat-icon {
+        margin-left: 4px;
+        padding-left: 12px;
+        border-left: 1px solid rgba(255, 255, 255, 0.712);
+        color: rgba(255, 255, 255, 0.712);
+    }
+}
+
+.contact-body {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+}
+
+.contact-details-box {
+    margin-left: 42px;
+    margin-top: 12px;
+}

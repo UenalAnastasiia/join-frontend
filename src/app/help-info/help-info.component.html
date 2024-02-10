@@ -1,0 +1,21 @@
+<mat-card class="container-style container-position">
+    <div class="card-header">
+        <div>
+            <h1>Help</h1>
+            <h3>App Information</h3>
+        </div>
+    </div>
+
+    <div class="help-video-container">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let part of helpInfoVideos" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ part.title }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <video src="assets/video/{{ part.videoName }}" controls></video>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</mat-card>

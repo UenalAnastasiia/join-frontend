@@ -1,0 +1,64 @@
+<div class="container-position container-style">
+    <button mat-icon-button class="info-btn">
+        <mat-icon (mouseenter)="showLegend = !showLegend" (mouseleave)="showLegend = !showLegend">information</mat-icon>
+    </button>
+    
+    <div class="calendar-header">
+        <span>
+            {{ displayMonth }} {{ displayYear }}
+        </span>
+        <span>
+            <button mat-icon-button (click)="decreaseMonth()" matTooltip="Last" matTooltipPosition="below"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>navigate_before</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="increaseMonth()" matTooltip="Next" matTooltipPosition="below"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>navigate_next</mat-icon>
+            </button>
+        </span>
+    </div>
+
+
+    <mat-card class="legend-card" *ngIf="showLegend">
+        <div *ngFor="let category of categoryList" [style.color]="shared.getCategoryColor(category)">
+            <mat-icon>circle</mat-icon>
+            <span>{{ category }}</span>
+        </div>
+    </mat-card>
+
+    <table class='calendar-table' *ngIf="calendar">
+        <thead>
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th class="weekend">Sat</th>
+                <th class="weekend">Sun</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let row of calendar | chunk: 7; let i = index">
+                <td class="calendar-day" *ngFor="let c of row; let j = index"
+                    [ngClass]="{'past-date': c.isPastDate, 'today': c.isToday, 'weekend': (j==5 || j==6)}">
+                    <div class="calendar-day-header">
+                        {{ c.date.getDate() }}
+                    </div>
+                    <div class="task-title-box">
+                        <div *ngFor="let task of shared.filterTasks">
+                            <span (click)="openTaskDetails(task.id)" [style.color]="shared.getCategoryColor(task.category)"
+                                [ngClass]="{'hideTask': c.date.getTime() != task.dueDate, 'showTask': c.date.getTime() === task.dueDate}"
+                                matTooltip="{{task.title}}" matTooltipPosition="above" matTooltipClass="tooltip-blue">
+                                <mat-icon>circle</mat-icon>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

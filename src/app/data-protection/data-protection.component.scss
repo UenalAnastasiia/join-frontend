@@ -1,0 +1,29 @@
+.bg-container {
+    min-height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    background-image: url('/../assets/img/bg1.jpg');
+}
+
+.data-box {
+    width: 75vw;
+    height: 75vh;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.home-icon {
+    color: var(--header);
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    font-size: 36px;
+    cursor: pointer;
+}

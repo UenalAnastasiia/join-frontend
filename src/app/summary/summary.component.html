@@ -1,0 +1,111 @@
+<mat-card class="container-style container-position">
+    <div class="card-header">
+        <div>
+            <h1>Summary</h1>
+            <h3>Task overview</h3>
+        </div>
+    </div>
+
+    <div class="summary-body">
+        <div class="summary-cards">
+            <div class="task-overview">
+                <mat-card routerLink="/board">
+                    <span>{{ taskLength }}</span> <br>
+                    <span>Tasks in Board</span>
+                </mat-card>
+
+                <mat-card routerLink="/board">
+                    <span>{{ inProgressLength }}</span> <br>
+                    <span>Tasks in Progress</span>
+                </mat-card>
+
+                <mat-card routerLink="/board">
+                    <span>{{ awaitingFeedbackLength }}</span> <br>
+                    <span>Awaiting Feedback</span>
+                </mat-card>
+            </div>
+
+            <div class="deadline-card">
+                <mat-card routerLink="/board">
+                    <div class="urgent-icon">
+                        <div>
+                            <mat-icon>keyboard_double_arrow_up</mat-icon>
+                        </div>
+                        <div>
+                            <span>{{ urgentLength }}</span> <br>
+                            <span>Urgent</span>
+                        </div>
+                    </div>
+
+                    <div class="urgent-date">
+                        <h4 *ngIf="!shared.deadlineExist">No Deadlines</h4>
+                        <h4 *ngIf="shared.deadlineExist">
+                            {{ shared.upcomingDeadline | date: "MMMM" }} {{ shared.upcomingDeadline | date: "dd" }}, {{ shared.upcomingDeadline | date: "yyyy" }}</h4>
+                        <h4>Upcoming Deadline</h4>
+                    </div>
+                </mat-card>
+            </div>
+
+            <div class="done-cards">
+                <mat-card routerLink="/board">
+                    <div>
+                        <mat-icon>file_open</mat-icon>
+                    </div>
+                    <div>
+                        <span>{{ toDoLength }}</span> <br>
+                        <span>To-do</span>
+                    </div>
+                </mat-card>
+
+                <mat-card routerLink="/board">
+                    <div>
+                        <mat-icon>check</mat-icon>
+                    </div>
+                    <div>
+                        <span>{{ doneLength }}</span> <br>
+                        <span>Done</span>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="greeting">
+            <div class="context">
+                <div class="clock">
+                    <div class="hour">
+                        <div class="hr" id="hr"></div>
+                    </div>
+
+                    <div class="min">
+                        <div class="mn" id="mn"></div>
+                    </div>
+
+                    <div class="sec">
+                        <div class="sc" id="sc"></div>
+                    </div>
+                </div>
+
+                <h3>{{ greeting }},</h3>
+                <h3>{{ auth.userName || 'Guest'}}
+                    <mat-icon>waving_hand</mat-icon>
+                </h3>
+            </div>
+
+
+            <div class="area">
+                <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</mat-card>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "joina-b265d": {
+      "hosting": {
+        "Join-A": [
+          "joina-b265d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "joina-b265d"
+  }
+}

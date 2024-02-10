@@ -1,0 +1,53 @@
+<mat-card class="container-style container-position">
+    <div class="contact-container">
+        <div class="contact-list-box">
+            <div class="box-height">
+                <div *ngFor="let contact of allContacts | filter: searchInput; let i = index" class="contact-box">
+                    <div *ngIf="checkLetter(contact.firstName)" class="letter-header">
+                        <h2>{{ contact.firstName.charAt(0).toUpperCase() }}</h2>
+                    </div>
+
+                    <div class="info-box"
+                        (click)="showDetails = true; shared.contactID = contact.id; activeElmIndex = i"
+                        [class.activeElm]="i === activeElmIndex">
+                        <div class="contact-symbol" [ngStyle]="{'background': contact.bgColor}">
+                            {{ contact.firstName[0].toUpperCase() }}{{ contact.lastName[0].toUpperCase() }}</div>
+
+                        <div class="contact-info">
+                            <span>{{ contact.firstName }} {{ contact.lastName }}</span>
+                            <span>{{ contact.email }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-body">
+            <div class="card-header">
+                <div>
+                    <h1>Contact</h1>
+                    <h3>Better with a team</h3>
+                </div>
+
+                <div>
+                    <span class="search-input">
+                        <input name="search" [(ngModel)]="searchInput" matInput autocomplete="off"
+                            placeholder="Search for...">
+                        <mat-icon>search</mat-icon>
+                    </span>
+                </div>
+            </div>
+
+            <div class="contact-details-box">
+                <app-dialog-contact-details *ngIf="showDetails"
+                    [contactID]="shared.contactID"></app-dialog-contact-details>
+            </div>
+        </div>
+
+        <div class="add-btn" (click)="openDialogAddContact()">
+            <button mat-raised-button>New contact
+                <mat-icon>person_add</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-card>

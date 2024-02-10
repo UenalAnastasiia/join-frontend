@@ -1,0 +1,131 @@
+.details-container {
+    margin-top: 8vh;
+    color: var(--font);
+}
+
+.contact-symbol {
+    background: #9327FF;
+    color: white !important;
+    border-radius: 50%;
+    font-size: 48px;
+    font-weight: 600;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin-right: 16px;
+}
+
+.contact-info-box {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+    min-width: 180px;
+}
+
+.header-name {
+    display: flex;
+    align-items: center;
+
+    span {
+        &:last-child {
+            font-size: 24px;
+            font-weight: 500;
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    button {
+        color: var(--header);
+    }
+}
+
+.contact-info-header {
+    display: flex;
+    align-items: baseline;
+    margin-top: 36px;
+
+    button {
+        margin-left: 36px;
+    }
+}
+
+.contact-info {
+    width: 30vw;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.mail-phone {
+    span {
+        margin-top: 12px;
+        margin-bottom: 12px;
+
+        h3 {
+            margin: 0;
+
+            &:last-child {
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--font);
+    }
+}
+
+.tasks-info {
+    span {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3 {
+            margin: 0;
+        }
+
+        &:first-child {
+            margin-bottom: 22px;
+        }
+
+        &:last-child {
+            h3 {
+                &:last-child {
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+.header-color {
+    color: var(--header) !important;
+}
+
+.mt-24 {
+    margin-top: 24px !important;
+}
+
+.task-length {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.task-length-hover {
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

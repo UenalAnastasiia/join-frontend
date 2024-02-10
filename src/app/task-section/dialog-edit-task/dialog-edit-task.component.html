@@ -1,0 +1,94 @@
+<div class="spinner-box" *ngIf="loadSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="edit-task-container">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="task-h">
+        <h1>Edit Task</h1>
+        <div *ngIf="taskData.dueDate < todayDate">
+            <mat-icon>notification_important</mat-icon>
+            <span>Deadline has been exceeded!</span>
+        </div>
+    </div>
+
+    <div class="task-box">
+        <div class="left-box">
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="Title" [(ngModel)]="taskData.title">
+            </mat-form-field>
+
+            <mat-form-field class="input-shadow input-box">
+                <textarea class="textarea-input" matInput type="text" placeholder="Description"
+                    [(ngModel)]="taskData.description"></textarea>
+            </mat-form-field>
+
+            <div class="input-box">
+                <select class="description-option input-shadow" [(ngModel)]="taskData.category"
+                    (change)="selectOptions()">
+                    <option [ngValue]="undefined" [disabled]="true">Choose category...</option>
+                    <option value="{{ category }}" *ngFor="let category of categoryList">{{ category }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="right-box">
+            <mat-form-field class="input-shadow input-box height-36">
+                <mat-label for="dueDate">Due Date</mat-label>
+                <input matInput [value]="taskData.dueDate | date:'M/d/yyyy'" *ngIf="!dateChange">
+                <input [min]="minDate" matInput [matDatepicker]="picker" [(ngModel)]="taskData.dueDate"
+                    (dateChange)="dateChange = true">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="priotity-section">
+                <mat-form-field class="input-shadow input-box hover-prio">
+                    <mat-label>Priority</mat-label>
+                    <input [(ngModel)]="taskData.priority" matInput class="d-none">
+                    <mat-radio-group class="example-radio-group" [(ngModel)]="taskData.priority"
+                        (change)="selectOptions()">
+                        <div *ngFor="let button of priorityBtn" class="btn-shadow">
+                            <mat-radio-button class="example-radio-button" value="{{ button.name }}">
+                                {{ button.name[0].toUpperCase() }}{{ button.name.slice(1).toLowerCase() }}
+                                <mat-icon class="{{ button.name }}-btn">{{ button.icon }}</mat-icon>
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                </mat-form-field>
+            </div>
+
+            <div class="input-box pos-rel">
+                <input readonly *ngIf="!hideHolder" class="input-holder" matInput [(ngModel)]="contactName">
+                <select class="description-option input-shadow" [(ngModel)]="contactName"
+                    (change)="getSelectedContact()">
+                    <option [ngValue]="undefined" [disabled]="true">Assigned to...</option>
+                    <option [ngValue]="contact" *ngFor="let contact of allContacts">
+                        {{ contact.firstName }} {{ contact.lastName }}</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <select class="description-option input-shadow" [(ngModel)]="taskData.status"
+                    (change)="selectOptions()">
+                    <option [ngValue]="undefined" [disabled]="true">Choose status...</option>
+                    <option value="{{ stat }}" *ngFor="let stat of statusList">{{ stat }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-box">
+        <div (click)="openDialogArchivedTask(taskData.id)" matTooltip="Archived task" matTooltipPosition="below"
+            matTooltipClass="tooltip-blue">
+            <mat-icon>delete</mat-icon>
+        </div>
+
+        <div (click)="saveTask()" matTooltip="Save" matTooltipPosition="below" matTooltipClass="tooltip-blue">
+            <mat-icon>done</mat-icon>
+        </div>
+    </div>
+</div>

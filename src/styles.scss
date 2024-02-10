@@ -1,0 +1,140 @@
+html,
+body {
+  height: 100%;
+}
+
+// * {
+//   border: 1px solid red;
+// }
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  cursor: context-menu;
+}
+
+:root {
+  --bg-dark: linear-gradient(to right, #292F4F, #111427);
+  --bg-light: #BBC1E1;
+  --header: #647dfe;
+  --font: #4b5585;
+  --grey: #A8A8A8;
+}
+
+*::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #00000000;
+}
+
+*::-webkit-scrollbar-track-piece {
+  background-color: #00000000;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #9aa5e0;
+  border: 1px solid #5866af;
+  border-radius: 24px;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: rgba(255, 255, 255, 0.712);
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox */
+  color: rgba(255, 255, 255, 0.712);
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11, Microsoft Edge */
+  color: rgba(255, 255, 255, 0.712);
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  color: rgba(255, 255, 255, 0.712);
+}
+
+.container-position {
+  // padding-left: 10vw;
+  position: absolute;
+  top: 72px;
+  left: 10vw;
+  z-index: 1;
+}
+
+.container-style {
+  height: calc(90vh - 56px);
+  width: 85vw;
+  max-width: 100%;
+  background: var(--bg-light);
+  border-radius: 24px !important;
+  box-shadow: 0px 0px 6px 4px #f1e0fe !important;
+  z-index: 1;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-left: 42px;
+  margin-top: 16px !important;
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 16px;
+    color: var(--header);
+    font-size: 42px;
+    font-weight: 600;
+    border-right: 2px solid var(--header);
+  }
+
+  h3 {
+    margin: 0;
+    font-weight: 600;
+    color: var(--header);
+  }
+
+  div {
+    display: flex;
+  }
+}
+
+.tooltip-blue {
+  background-color: var(--header);
+  color: white !important;
+  font-weight: 600;
+}
+
+.d-none {
+  display: none;
+}
+
+.mat-snack-bar-container {
+  background-color: var(--bg-light) !important;
+  color: #cc3e11 !important;
+  min-width: 180px !important;
+
+  span {
+      font-weight: 700;
+  }
+}
+
+.pos-rel {
+  position: relative;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

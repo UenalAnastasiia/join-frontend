@@ -1,0 +1,21 @@
+<div class="history-container">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="history-h">
+        <h1>History</h1>
+    </div>
+
+    <div *ngFor="let task of taskData" class="history-message">
+        <span>
+            {{ task.message }}:
+        </span>
+        <span>
+            {{ task.historyDate | date: "MMM" }} {{ task.historyDate | date: "dd" }}, {{
+            task.historyDate |
+            date:"yyyy" }}
+            at {{ task.historyDate | date: "HH:mm"}}
+        </span>
+    </div>
+</div>

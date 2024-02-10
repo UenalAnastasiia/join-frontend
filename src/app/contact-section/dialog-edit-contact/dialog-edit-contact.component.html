@@ -1,0 +1,46 @@
+<div class="spinner-box" *ngIf="loadSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="edit-contact-container"  *ngIf="contactData">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="edit-h">
+        <h1>Edit contact</h1>
+    </div>
+
+    <div class="edit-box">
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="First Name" [(ngModel)]="contactData.firstName">
+                <mat-icon>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="Last Name" [(ngModel)]="contactData.lastName">
+                <mat-icon>person</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="E-Mail" [(ngModel)]="contactData.email">
+                <mat-icon>mail</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="Phone" [(ngModel)]="contactData.phone">
+                <mat-icon>phone</mat-icon>
+            </mat-form-field>
+    </div>
+
+    <div class="button-box">
+        <div (click)="openDialogDeleteContact(contactData.id)" matTooltip="Delete Contact" matTooltipPosition="below"
+            matTooltipClass="tooltip-blue">
+            <mat-icon>delete</mat-icon>
+        </div>
+
+        <div (click)="saveContact()" matTooltip="Save" matTooltipPosition="below" matTooltipClass="tooltip-blue">
+            <mat-icon>done</mat-icon>
+        </div>
+    </div>
+</div>
