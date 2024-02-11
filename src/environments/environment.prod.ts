@@ -1,4 +1,5 @@
 export const environment = {
+  baseURL: 'https://anastasiiarest.pythonanywhere.com',
   firebase: {
     projectId: 'joina-b265d',
     appId: '1:303399824166:web:60dbbb7470f2f977bcefe7',

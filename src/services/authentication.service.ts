@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
-  Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,
+  Auth, createUserWithEmailAndPassword, signOut,
   signInWithPopup, GoogleAuthProvider
 } from '@angular/fire/auth';
 import { getAuth, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth';
 import { SnackBarService } from './snack-bar.service';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +19,22 @@ export class AuthenticationService {
   userEmail: any;
   errorResetMessage: any;
 
-  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog) { }
+  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient) { }
+
+
+  public loginWithUsernameAndPassword(username: string, password: string) {
+    const url = environment.baseURL + '/login/';
+    const body = {
+      "username": username,
+      "password": password
+    };
+
+    return lastValueFrom(this.http.post(url, body));
+  }
 
 
   register({ email, password }: any) {
     return createUserWithEmailAndPassword(this.auth, email, password);
-  }
-
-
-  login({ email, password }: any) {
-    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
 

@@ -14,12 +14,12 @@ import { DataProtectionComponent } from './data-protection/data-protection.compo
 
 const routes: Routes = [
   { path: '', redirectTo: 'summary', pathMatch: 'full' },
-  { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard] },
-  { path: 'board', component: BoardComponent, canActivate: [AuthGuard] },
-  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
-  { path: 'archiv', component: ArchivComponent, canActivate: [AuthGuard] },
-  { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
-  { path: 'help', component: HelpInfoComponent, canActivate: [AuthGuard] },
+  { path: 'summary', component: SummaryComponent },
+  { path: 'board', component: BoardComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'archiv', component: ArchivComponent },
+  { path: 'calendar', component: CalendarComponent },
+  { path: 'help', component: HelpInfoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: SignInComponent },
   { path: 'imprint', component: ImprintComponent },

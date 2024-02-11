@@ -48,6 +48,8 @@ import { HelpInfoComponent } from './help-info/help-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ImprintComponent } from './imprint/imprint.component';
 import { DataProtectionComponent } from './data-protection/data-protection.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthIntercepterService } from 'src/services/auth-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -97,11 +99,19 @@ import { DataProtectionComponent } from './data-protection/data-protection.compo
     ReactiveFormsModule,
     MatMenuModule,
     MatExpansionModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth())
   ],
-  providers: [],
+
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthIntercepterService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

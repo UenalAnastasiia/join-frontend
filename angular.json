@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Join-A": {
+    "join-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/join-a",
+            "outputPath": "dist/join-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Join-A:build:production"
+              "browserTarget": "join-frontend:build:production"
             },
             "development": {
-              "browserTarget": "Join-A:build:development"
+              "browserTarget": "join-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Join-A:build"
+            "browserTarget": "join-frontend:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
           "options": {
             "prerender": false,
             "ssr": false,
-            "browserTarget": "Join-A:build:production",
+            "browserTarget": "join-frontend:build:production",
             "firebaseProject": "joina-b265d",
             "firebaseHostingSite": "joina-b265d"
           }

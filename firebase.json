@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "Join-A",
-    "public": "dist/join-a",
+    "public": "dist/join-frontend",
     "ignore": [
       "**/.*"
     ],
