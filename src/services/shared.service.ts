@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore';
 import { collection, doc, getDoc, orderBy, query } from 'firebase/firestore';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,20 @@ export class SharedService {
   upcomingDeadline: any;
 
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private http: HttpClient) {
   }
+
+  public loadTasksFromAPI() {
+    const url = environment.baseURL + '/tasks/';
+    return lastValueFrom(this.http.get(url));
+  }
+
+
+  public loadUserFromAPI(id: number) {
+    const url = environment.baseURL + `/users/${id}/`;
+    return lastValueFrom(this.http.get(url));
+  }
+
 
 
   renderAllTasks() {

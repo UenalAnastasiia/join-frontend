@@ -1,9 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { collection, query, where } from 'firebase/firestore';
-import { Observable } from 'rxjs';
-import { Task } from 'src/models/task.class';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharedService } from 'src/services/shared.service';
 
@@ -15,11 +11,7 @@ import { SharedService } from 'src/services/shared.service';
 export class SummaryComponent implements OnInit, OnDestroy {
   greeting: string;
   timerInterval: any;
-  task = new Task();
-  allTasks$: Observable<any>;
   allTasks: any = [];
-  taskID: string;
-
   taskLength: number;
   urgentLength: number;
   toDoLength: number;
@@ -29,15 +21,13 @@ export class SummaryComponent implements OnInit, OnDestroy {
   statusList: any[] = ["To do", "In progress", "Awaiting Feedback", "Done"];
 
 
-  constructor(public router: Router, private firestore: Firestore, public shared: SharedService, public auth: AuthenticationService) {
+  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.allTasks = await this.shared.loadTasksFromAPI();
     this.auth.getLoggedUser();
-    this.renderTasks();
-    this.renderSummary();
-    this.getTime();
-    this.getGreeting();    
+    this.renderSummary(this.allTasks);
   }
 
 
@@ -46,23 +36,17 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
 
-  renderSummary() {
+  renderSummary(fetchedTasks: Object) {
+    this.getTime();
+    this.getGreeting(); 
     this.getTaskUrgencyLength();
     for (let index = 0; index < this.statusList.length; index++) {
       this.getTaskStatusLength(this.statusList[index]);
     }
+    this.shared.getUpcomingDeadline(fetchedTasks);
+    this.getTaskLength(fetchedTasks);
   }
 
-
-  renderTasks() {
-    const taskCollection = collection(this.firestore, 'tasks');
-    this.allTasks$ = collectionData(taskCollection, { idField: "taskID" });
-
-    this.allTasks$.subscribe((loadData: any) => {
-      this.shared.getUpcomingDeadline(loadData);
-      this.getTaskLength(loadData);
-    });
-  }
 
 
   getTime() {
@@ -95,28 +79,23 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
 
   getTaskStatusLength(statusName: string) {
-    const queryCollection = query(collection(this.firestore, "tasks"), where("status", "==", statusName));
-    this.allTasks$ = collectionData(queryCollection, { idField: "taskID" });
-    this.allTasks$.subscribe((data: any) => {
-      if (statusName === "To do") {
-        this.toDoLength = data.length;
-      } else if (statusName === "In progress") {
-        this.inProgressLength = data.length;
-      } else if (statusName === "Awaiting Feedback") {
-        this.awaitingFeedbackLength = data.length;
-      } else if (statusName === "Done") {
-        this.doneLength = data.length;
-      }
-    });
+    let data = this.allTasks.filter(obj => obj.status == statusName);
+
+    if (statusName === "To do") {
+      this.toDoLength = data.length;
+    } else if (statusName === "In progress") {
+      this.inProgressLength = data.length;
+    } else if (statusName === "Awaiting Feedback") {
+      this.awaitingFeedbackLength = data.length;
+    } else if (statusName === "Done") {
+      this.doneLength = data.length;
+    }
   }
 
 
   async getTaskUrgencyLength() {
-    const queryCollection = query(collection(this.firestore, "tasks"), where("priority", "==", "urgent"));
-    this.allTasks$ = collectionData(queryCollection, { idField: "taskID" });
-    this.allTasks$.subscribe((data: any) => {
-      this.urgentLength = data.length;
-    });
+    let data = this.allTasks.filter(obj => obj.priority == "urgent");
+    this.urgentLength = data.length;
   }
 
 

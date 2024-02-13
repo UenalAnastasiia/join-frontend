@@ -9,17 +9,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { SharedService } from './shared.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  userName: any;
+  userName: string;
   userImg: any;
-  userEmail: any;
+  userEmail: string;
   errorResetMessage: any;
 
-  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient) { }
+  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient, public shared: SharedService) { }
 
 
   public loginWithUsernameAndPassword(username: string, password: string) {
@@ -28,7 +29,6 @@ export class AuthenticationService {
       "username": username,
       "password": password
     };
-
     return lastValueFrom(this.http.post(url, body));
   }
 
@@ -48,21 +48,18 @@ export class AuthenticationService {
   }
 
 
-  getLoggedUser() {
-    const authUser = getAuth();
-    onAuthStateChanged(authUser, (user) => {
-      if (user) {
-        this.userName = user.displayName;
-        this.userImg = user.photoURL;
-        this.userEmail = user.email;
-      }
-    });
+  async getLoggedUser() {
+    let JSONdata = JSON.parse(localStorage.getItem("token"));
+    if (JSONdata) {
+      let loggedUser = await this.shared.loadUserFromAPI(JSONdata.id);
+      this.userName = loggedUser[0]['username'];
+      this.userEmail = loggedUser[0]['email'];
+      //this.userImg
+    }
   }
 
 
   resetPassword(email: any) {
-    console.log('email ', email);
-
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)
       .then(() => {

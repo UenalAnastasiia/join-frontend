@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   async loginUser() {
     try {
       let resp: any = await this.auth.loginWithUsernameAndPassword(this.username, this.password);
-      console.log(resp);
       localStorage.setItem('token', JSON.stringify({token: resp['token'], id: resp['user_id']}));
       window.location.href = '/summary';
     } catch(e) {
@@ -47,7 +46,7 @@ export class LoginComponent implements OnInit {
   signInWithGoogle() {
     this.auth.loginWithGoogle()
       .then(() => {
-        this.auth.getLoggedUser();
+        //this.auth.getLoggedUser();
         window.location.href = '/summary';
       })
       .catch(error => this.error = error);
