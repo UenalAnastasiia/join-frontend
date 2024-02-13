@@ -41,10 +41,12 @@ export class NavbarComponent implements OnInit {
 
 
   logOut() {
-    this.auth.logout()
-      .then(() => {
+      try {
+        this.auth.logout();
+        localStorage.removeItem('user');
         window.location.href = '/login';
-      })
-      .catch(error => console.log(error));
+      } catch(e) {
+        console.error('Error in Logout: ', e);    
+      }
   }
 }

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   async loginUser() {
     try {
       let resp: any = await this.auth.loginWithUsernameAndPassword(this.username, this.password);
-      localStorage.setItem('token', JSON.stringify({token: resp['token'], id: resp['user_id']}));
+      localStorage.setItem('user', JSON.stringify({token: resp['token'], id: resp['user_id']}));
       window.location.href = '/summary';
     } catch(e) {
       this.error = e;

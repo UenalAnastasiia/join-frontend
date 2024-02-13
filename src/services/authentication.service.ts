@@ -44,18 +44,19 @@ export class AuthenticationService {
 
 
   logout() {
-    return signOut(this.auth);
+    const url = environment.baseURL + '/logout/';
+    return lastValueFrom(this.http.get(url));
   }
 
 
   async getLoggedUser() {
-    let JSONdata = JSON.parse(localStorage.getItem("token"));
+    let JSONdata = JSON.parse(localStorage.getItem('user'));
     if (JSONdata) {
       let loggedUser = await this.shared.loadUserFromAPI(JSONdata.id);
       this.userName = loggedUser[0]['username'];
       this.userEmail = loggedUser[0]['email'];
       //this.userImg
-    }
+    } 
   }
 
 

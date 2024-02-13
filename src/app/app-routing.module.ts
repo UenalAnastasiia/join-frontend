@@ -13,7 +13,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { DataProtectionComponent } from './data-protection/data-protection.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'summary', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'summary', component: SummaryComponent },
   { path: 'board', component: BoardComponent },
   { path: 'contact', component: ContactComponent },
