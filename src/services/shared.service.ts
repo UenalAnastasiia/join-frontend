@@ -23,36 +23,7 @@ export class SharedService {
 
   constructor(private firestore: Firestore, private http: HttpClient) {
   }
-
-  public loadTasksFromAPI() {
-    const url = environment.baseURL + '/tasks/';
-    return lastValueFrom(this.http.get(url));
-  }
-
-
-  public loadAllUsersFromAPI() {
-    const url = environment.baseURL + `/users/`;
-    return lastValueFrom(this.http.get(url));
-  }
-
-
-  public loadUserFromAPI(id: number) {
-    const url = environment.baseURL + `/users/${id}/`;
-    return lastValueFrom(this.http.get(url));
-  }
-
-
-
-  async renderAllTasks() {
-    const taskCollection = collection(this.firestore, 'tasks');
-    this.allTasks$ = collectionData(taskCollection, { idField: "taskID" });
-
-    this.allTasks$.subscribe((loadData: any) => {
-      this.allTasks = loadData;
-      this.filterTasks = loadData.filter(data => data.status != 'Archived');
-    });
-  }
-
+  
 
   async loadContactDetails(id: any) {
     if (id) {

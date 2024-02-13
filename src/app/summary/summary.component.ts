@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharedService } from 'src/services/shared.service';
+import { TasksApiService } from 'src/services/tasks-api.service';
 
 @Component({
   selector: 'app-summary',
@@ -21,11 +22,11 @@ export class SummaryComponent implements OnInit, OnDestroy {
   statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
 
-  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService) {
+  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService, private taskAPI: TasksApiService) {
   }
 
   async ngOnInit() {
-    this.allTasks = await this.shared.loadTasksFromAPI();
+    this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
     this.auth.getLoggedUser();
     this.renderSummary(this.allTasks);
   }

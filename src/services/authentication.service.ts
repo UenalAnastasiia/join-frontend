@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from './shared.service';
+import { UsersApiService } from './users-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthenticationService {
   userEmail: string;
   errorResetMessage: any;
 
-  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient, public shared: SharedService) { }
+  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient, 
+    public shared: SharedService, private userAPI: UsersApiService) { }
 
 
   public loginWithUsernameAndPassword(username: string, password: string) {
@@ -52,7 +54,7 @@ export class AuthenticationService {
   async getLoggedUser() {
     let JSONdata = JSON.parse(localStorage.getItem('user'));
     if (JSONdata) {
-      let loggedUser = await this.shared.loadUserFromAPI(JSONdata.id);
+      let loggedUser = await this.userAPI.loadUserFromAPI(JSONdata.id);
       this.userName = loggedUser[0]['username'];
       this.userEmail = loggedUser[0]['email'];
       //this.userImg

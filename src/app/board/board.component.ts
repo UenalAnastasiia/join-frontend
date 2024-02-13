@@ -10,6 +10,8 @@ import { DialogTaskHistoryComponent } from '../task-section/dialog-task-history/
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TasksApiService } from 'src/services/tasks-api.service';
+import { UsersApiService } from 'src/services/users-api.service';
 
 @Component({
   selector: 'app-board',
@@ -31,7 +33,8 @@ export class BoardComponent implements OnInit {
   statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
 
-  constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient) { }
+  constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
+    private userAPI: UsersApiService) { }
 
   ngOnInit() {
     this.todayDate = new Date().getTime();
@@ -40,8 +43,8 @@ export class BoardComponent implements OnInit {
 
 
   async renderBoard() {
-    this.allUsers = await this.shared.loadAllUsersFromAPI();
-    let allTasks = await this.shared.loadTasksFromAPI();
+    this.allUsers = await this.userAPI.loadAllUsersFromAPI();
+    let allTasks = await this.taskAPI.loadAllTasksFromAPI();
     this.renderAllTasks(allTasks);   
   }
 

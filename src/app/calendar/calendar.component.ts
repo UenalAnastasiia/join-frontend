@@ -24,7 +24,7 @@ export class CalendarComponent implements OnInit {
   constructor(public shared: SharedService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.shared.renderAllTasks();
+    //this.shared.renderAllTasks();
     this.generateCalendarDays(this.monthIndex);
   }
 

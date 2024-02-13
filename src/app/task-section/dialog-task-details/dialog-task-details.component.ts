@@ -7,6 +7,7 @@ import { SharedService } from 'src/services/shared.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
 import { DialogEditTaskComponent } from '../dialog-edit-task/dialog-edit-task.component';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
+import { TasksApiService } from 'src/services/tasks-api.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class DialogTaskDetailsComponent implements OnInit {
     private firestore: Firestore, 
     public dialog: MatDialog, 
     public shared: SharedService,
-    public messageService: SnackBarService) { }
+    public messageService: SnackBarService,
+    private taskAPI: TasksApiService) { }
 
   
   ngOnInit(): void {
@@ -35,9 +37,10 @@ export class DialogTaskDetailsComponent implements OnInit {
 
 
   async loadTask() {
-    const docRef = doc(this.firestore, "tasks", this.task.id);
-    const docSnap = await getDoc(docRef);
-    this.taskData = docSnap.data();
+    let taskData = await this.taskAPI.loadTaskFromAPI(this.task.id);
+    this.taskData = taskData[0];
+    console.log('task ', this.taskData);
+    
   }
 
 
