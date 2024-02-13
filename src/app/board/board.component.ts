@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
-    private userAPI: UsersApiService) { }
+    public userAPI: UsersApiService) { }
 
   ngOnInit() {
     this.todayDate = new Date().getTime();
@@ -69,15 +69,6 @@ export class BoardComponent implements OnInit {
       this.awaitingfeedbackTask = filterData;
     } else if (name === "Done") {
       this.doneTask = filterData;
-    }
-  }
-
-
-  getUser(id: number) {
-    if (id) {
-      let user = this.allUsers.filter((obj) => obj.id == id);
-      let nameFormat = user[0].first_name[0] + user[0].last_name[0];
-      return nameFormat
     }
   }
 
