@@ -121,6 +121,7 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
     align-items: center;
     overflow-y: auto;
     max-height: 64vh;
+    padding-bottom: 4px;
 
     .task-card {
         display: flex;

@@ -1,14 +1,15 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { collectionData, doc, Firestore, collection, query, updateDoc, where } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { addDoc, orderBy } from 'firebase/firestore';
 import { Task } from 'src/models/task.class';
 import { SharedService } from 'src/services/shared.service';
 import { DialogRequestComponent } from '../dialog-request/dialog-request.component';
 import { DialogAddTaskComponent } from '../task-section/dialog-add-task/dialog-add-task.component';
 import { DialogTaskDetailsComponent } from '../task-section/dialog-task-details/dialog-task-details.component';
 import { DialogTaskHistoryComponent } from '../task-section/dialog-task-history/dialog-task-history.component';
+import { environment } from 'src/environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-board',
@@ -18,45 +19,63 @@ import { DialogTaskHistoryComponent } from '../task-section/dialog-task-history/
 })
 export class BoardComponent implements OnInit {
   task: Task = new Task();
-  taskID: string;
+  // taskID: string;
   todayDate: any;
-
+  allUsers: any = [];
   todoTask: any;
   inprogressTask: any = [];
   awaitingfeedbackTask: any = [];
   doneTask: any = [];
   searchInput: string;
 
-  statusList: any[] = ["To do", "In progress", "Awaiting Feedback", "Done"];
+  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
 
-  constructor(public dialog: MatDialog, private firestore: Firestore, public shared: SharedService) { }
+  constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.todayDate = new Date().getTime();
+    this.renderBoard();
+  }
 
-    this.shared.renderAllTasks();
+
+  async renderBoard() {
+    this.allUsers = await this.shared.loadAllUsersFromAPI();
+    let allTasks = await this.shared.loadTasksFromAPI();
+    this.renderAllTasks(allTasks);   
+  }
+
+
+  renderAllTasks(taskData: any) {
+    let filterDate = taskData.filter((data: { status: string; }) => data.status != 'Archived');
 
     for (let index = 0; index < this.statusList.length; index++) {
-      this.filterTasks(this.statusList[index]);
+      this.filterTasks(filterDate, this.statusList[index]);
     }
   }
 
 
-  filterTasks(name: string) {
-    const queryCollection = query(collection(this.firestore, "tasks"), where("status", "==", name), orderBy("dueDate"));
-    this.shared.allTasks$ = collectionData(queryCollection, { idField: "taskID" });
-    this.shared.allTasks$.subscribe((data: any) => {
-      if (name === "To do") {
-        this.todoTask = data;
-      } else if (name === "In progress") {
-        this.inprogressTask = data;
-      } else if (name === "Awaiting Feedback") {
-        this.awaitingfeedbackTask = data;
-      } else if (name === "Done") {
-        this.doneTask = data;
-      }
-    });
+  filterTasks(tasks: any[], name: string) {
+    let filterData = tasks.filter((obj: { status: string; }) => obj.status == name);
+    
+    if (name === "To do") {
+      this.todoTask = filterData;
+    } else if (name === "In progress") {
+      this.inprogressTask = filterData;
+    } else if (name === "Awaiting Feedback") {
+      this.awaitingfeedbackTask = filterData;
+    } else if (name === "Done") {
+      this.doneTask = filterData;
+    }
+  }
+
+
+  getUser(id: number) {
+    if (id) {
+      let user = this.allUsers.filter((obj) => obj.id == id);
+      let nameFormat = user[0].first_name[0] + user[0].last_name[0];
+      return nameFormat
+    }
   }
 
 
@@ -74,21 +93,19 @@ export class BoardComponent implements OnInit {
 
 
   async updateTaskStatus(taskID: any, stat: string) {
-    await updateDoc(doc(this.firestore, "tasks", taskID),
-      { status: stat });
-
-    this.updateTaskHistory(taskID);
+    const url = environment.baseURL + `/tasks/${taskID}/`;
+    return lastValueFrom(this.http.patch(url, {status: stat}));
   }
 
 
   async updateTaskHistory(id: any) {
-    const docRef = doc(this.firestore, 'tasks', id);
-    const colRef = collection(docRef, "history")
-    addDoc(colRef, {
-      historyDate: Date.now(),
-      message: 'Edit Task',
-      change: 'Was changed'
-    });
+    // const docRef = doc(this.firestore, 'tasks', id);
+    // const colRef = collection(docRef, "history")
+    // addDoc(colRef, {
+    //   historyDate: Date.now(),
+    //   message: 'Edit Task',
+    //   change: 'Was changed'
+    // });
   }
 
 

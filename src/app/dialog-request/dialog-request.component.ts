@@ -61,8 +61,8 @@ export class DialogRequestComponent implements OnInit {
   async archivedTask() {
     await updateDoc(doc(this.firestore, "tasks", this.archivedID),
       {
-        status: 'archived',
-        priority: 'archived'
+        status: 'Archived',
+        priority: 'Archived'
       });
     this.messageService.showSnackMessage('Task has been archived!');
 

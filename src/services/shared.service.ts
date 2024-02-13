@@ -30,6 +30,12 @@ export class SharedService {
   }
 
 
+  public loadAllUsersFromAPI() {
+    const url = environment.baseURL + `/users/`;
+    return lastValueFrom(this.http.get(url));
+  }
+
+
   public loadUserFromAPI(id: number) {
     const url = environment.baseURL + `/users/${id}/`;
     return lastValueFrom(this.http.get(url));
@@ -37,13 +43,13 @@ export class SharedService {
 
 
 
-  renderAllTasks() {
+  async renderAllTasks() {
     const taskCollection = collection(this.firestore, 'tasks');
     this.allTasks$ = collectionData(taskCollection, { idField: "taskID" });
 
     this.allTasks$.subscribe((loadData: any) => {
       this.allTasks = loadData;
-      this.filterTasks = loadData.filter(data => data.status != 'archived');
+      this.filterTasks = loadData.filter(data => data.status != 'Archived');
     });
   }
 
@@ -65,7 +71,7 @@ export class SharedService {
 
     this.allTasks$.subscribe((loadData: any) => {
       if (this.contactData) {
-        let filterData = loadData.filter((data: any) => data.assignedTo === this.contactData.fullName && data.status != 'archived');
+        let filterData = loadData.filter((data: any) => data.assignedTo === this.contactData.fullName && data.status != 'Archived');
         this.taskLength = filterData.length;
         this.contactTasks = filterData;
         this.getUpcomingDeadline(filterData);
@@ -76,7 +82,7 @@ export class SharedService {
 
   getUpcomingDeadline(taskData: any) {
     let todayDate = new Date().getTime();
-    let filterDate = taskData.filter((data: any) => data.dueDate > todayDate && data.status != 'archived');
+    let filterDate = taskData.filter((data: any) => data.dueDate > todayDate && data.status != 'Archived');
 
     if (filterDate.length >= 1) {
       this.deadlineExist = true;

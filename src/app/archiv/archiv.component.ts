@@ -23,7 +23,7 @@ export class ArchivComponent implements OnInit {
   constructor(private firestore: Firestore, public dialog: MatDialog, public shared: SharedService) { }
 
   ngOnInit(): void {
-    const queryCollection = query(collection(this.firestore, "tasks"), where("status", "==", "archived"));
+    const queryCollection = query(collection(this.firestore, "tasks"), where("status", "==", "Archived"));
     this.archivedTasks$ = collectionData(queryCollection, { idField: "taskID" });
     this.archivedTasks$.subscribe((data: any) => {
       this.archivedTasks = data;

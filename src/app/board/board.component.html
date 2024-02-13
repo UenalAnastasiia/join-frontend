@@ -44,13 +44,14 @@
 
                         <div (click)="openTaskDetails(task.id)">
                             <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
-                                {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy" }}
+                                {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
                                 <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
                             </span>
                             <h4 class="task-name">{{ task.title }}</h4>
                             <div>
                                 <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
-                                    {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                                    {{ getUser(task.assigned_to) }}
+                                </span>
                                 <mat-icon style="color: #7AE229"
                                     *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                                 <mat-icon style="color: #FF3D00"
@@ -97,13 +98,14 @@
 
                         <div (click)="openTaskDetails(task.id)">
                             <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
-                                {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy" }}
+                                {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
                                 <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
                             </span>
                             <h4 class="task-name">{{ task.title }}</h4>
                             <div>
                                 <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
-                                    {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                                    {{ getUser(task.assigned_to) }}
+                                </span>
                                 <mat-icon style="color: #7AE229"
                                     *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                                 <mat-icon style="color: #FF3D00"
@@ -150,13 +152,14 @@
 
                         <div (click)="openTaskDetails(task.id)">
                             <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
-                                {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy" }}
+                                {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
                                 <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
                             </span>
                             <h4 class="task-name">{{ task.title }}</h4>
                             <div>
                                 <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
-                                    {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                                    {{ getUser(task.assigned_to) }}
+                                </span>
                                 <mat-icon style="color: #7AE229"
                                     *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                                 <mat-icon style="color: #FF3D00"
@@ -180,9 +183,6 @@
         <div class="progress-box">
             <div class="progress-header">
                 <h1>Done</h1>
-                <button mat-icon-button (click)="openDialogAddTask('Done')">
-                    <mat-icon>add_circle</mat-icon>
-                </button>
             </div>
 
             <div class="task-cards" cdkDropList #doneList="cdkDropList" id="Done" [cdkDropListData]="doneTask"
@@ -203,13 +203,14 @@
 
                         <div (click)="openTaskDetails(task.id)">
                             <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
-                                {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy" }}
+                                {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
                                 <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
                             </span>
                             <h4 class="task-name">{{ task.title }}</h4>
                             <div>
                                 <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
-                                    {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                                    {{ getUser(task.assigned_to) }}
+                                </span>
                                 <mat-icon style="color: #7AE229"
                                     *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                                 <mat-icon style="color: #FF3D00"
@@ -218,13 +219,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="add-card" (click)="openDialogAddTask('Done')">
-                    <span>Create new task</span>
-                    <button mat-icon-button>
-                        <mat-icon>add_circle</mat-icon>
-                    </button>
                 </div>
             </div>
         </div>
