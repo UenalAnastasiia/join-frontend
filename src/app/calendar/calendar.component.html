@@ -49,9 +49,10 @@
                         {{ c.date.getDate() }}
                     </div>
                     <div class="task-title-box">
-                        <div *ngFor="let task of shared.filterTasks">
+                        <div *ngFor="let task of allTasks">
                             <span (click)="openTaskDetails(task.id)" [style.color]="shared.getCategoryColor(task.category)"
-                                [ngClass]="{'hideTask': c.date.getTime() != task.dueDate, 'showTask': c.date.getTime() === task.dueDate}"
+                                class="showTask"
+                                [ngClass]="{'hideTask': c.date != getTimeFormat(task.due_date), 'showTask': c.date === getTimeFormat(task.due_date)}"
                                 matTooltip="{{task.title}}" matTooltipPosition="above" matTooltipClass="tooltip-blue">
                                 <mat-icon>circle</mat-icon>
                             </span>

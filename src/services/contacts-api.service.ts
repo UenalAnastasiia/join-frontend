@@ -26,7 +26,7 @@ export class ContactsApiService {
 
 
   public getContact(id: number, contactObjects: any[], format: string) {
-    if (id && contactObjects) {
+    if (id && contactObjects) {      
       let contact = contactObjects.filter((obj) => obj.id == id);
 
       let abbrName = contact[0].first_name[0] + contact[0].last_name[0];

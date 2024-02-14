@@ -4,6 +4,7 @@ import { CalendarDay } from 'src/models/calendar.class';
 import { SharedService } from 'src/services/shared.service';
 import { Task } from 'src/models/task.class';
 import { DialogTaskDetailsComponent } from '../task-section/dialog-task-details/dialog-task-details.component';
+import { TasksApiService } from 'src/services/tasks-api.service';
 
 @Component({
   selector: 'app-calendar',
@@ -20,12 +21,19 @@ export class CalendarComponent implements OnInit {
   monthIndex: number = 0;
   task: Task = new Task();
   showLegend: boolean = false;
+  allTasks: any = [];
 
-  constructor(public shared: SharedService, public dialog: MatDialog) { }
+  constructor(public shared: SharedService, public dialog: MatDialog, private taskAPI: TasksApiService) { }
 
-  ngOnInit(): void {
-    //this.shared.renderAllTasks();
+  async ngOnInit() {
+    let allTasks = await this.taskAPI.loadAllTasksFromAPI();
+    this.renderTasks(allTasks);
     this.generateCalendarDays(this.monthIndex);
+  }
+
+
+  renderTasks(allTasks) {
+    this.allTasks = allTasks.filter((data: { status: string; }) => data.status != 'Archived');
   }
 
 
@@ -40,7 +48,12 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < 42; i++) {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
-    }
+    }    
+  }
+
+
+  getTimeFormat(date) {
+    return new Date(date);
   }
 
 

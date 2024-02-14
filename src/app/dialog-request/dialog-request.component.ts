@@ -1,8 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
 import { TasksApiService } from 'src/services/tasks-api.service';
@@ -32,7 +35,8 @@ export class DialogRequestComponent implements OnInit {
     private firestore: Firestore, 
     private messageService: SnackBarService,
     public auth: AuthenticationService,
-    private taskAPI: TasksApiService) { }
+    private taskAPI: TasksApiService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -61,16 +65,23 @@ export class DialogRequestComponent implements OnInit {
 
 
   async archivedTask() {
-    await updateDoc(doc(this.firestore, "tasks", this.archivedID),
-      {
-        status: 'Archived',
-        priority: 'Archived'
-      });
+    let body = {
+      'priority': 'Archived',
+      'status': 'Archived'
+    };    
+
+    this.updateTask(body)
     this.messageService.showSnackMessage('Task has been archived!');
 
     setTimeout(() => {
       this.dialog.closeAll();
     }, 1000);
+  }
+
+
+  updateTask(body) {
+    const url = environment.baseURL + `/tasks/${this.archivedID}/`;
+    return lastValueFrom(this.http.patch(url, body));
   }
 
 
@@ -97,7 +108,7 @@ export class DialogRequestComponent implements OnInit {
 
 
   async deleteContactDoc() {
-    this.taskAPI.deleteTask(this.contactID);
+    //this.taskAPI.deleteTask(this.contactID);
     
     setTimeout(() => {
       this.dialog.closeAll();
@@ -121,8 +132,8 @@ export class DialogRequestComponent implements OnInit {
   }
 
 
-  async deleteTaskDoc() {
-    await deleteDoc(doc(this.firestore, "tasks", this.deleteTaskID));
+  deleteTaskDoc() {
+    this.taskAPI.deleteTask(this.deleteTaskID);
 
     setTimeout(() => {
       this.dialog.closeAll();
@@ -146,9 +157,9 @@ export class DialogRequestComponent implements OnInit {
   }
 
 
-  async deleteAllTasksFromArchiv() {
+  deleteAllTasksFromArchiv() {
     for (let index = 0; index < this.allTasksData.length; index++) {
-      await deleteDoc(doc(this.firestore, "tasks",  this.allTasksData[index].id));
+      this.taskAPI.deleteTask(this.allTasksData[index].id);
     }
 
     setTimeout(() => {

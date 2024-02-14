@@ -27,7 +27,7 @@ export class DialogContactDetailsComponent implements OnInit, OnChanges {
 
 
   openDialogAddTask(firstName: string, lastName: string, color: any) {
-    let name = firstName + lastName;
+    let name = firstName + ' ' + lastName;
     const dialog = this.dialog.open(DialogAddTaskComponent);
     dialog.componentInstance.contactName = name;
     dialog.componentInstance.contactBG = color;

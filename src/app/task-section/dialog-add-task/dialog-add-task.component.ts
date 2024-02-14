@@ -44,7 +44,7 @@ export class DialogAddTaskComponent implements OnInit {
   ];
 
   categoryList: any[] = ['Frontend', 'Backend', 'Design', 'Marketing', 'Backoffice', 'Other'];
-  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
+  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback'];
 
   title = new FormControl('', [Validators.required, Validators.minLength(1)]);
   description = new FormControl('', [Validators.required, Validators.minLength(1)]);

@@ -10,6 +10,9 @@ import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.co
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { UsersApiService } from 'src/services/users-api.service';
 import { ContactsApiService } from 'src/services/contacts-api.service';
+import { environment } from 'src/environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -32,7 +35,8 @@ export class DialogTaskDetailsComponent implements OnInit {
     public messageService: SnackBarService,
     private taskAPI: TasksApiService,
     public userAPI: UsersApiService,
-    public contactAPI: ContactsApiService) { }
+    public contactAPI: ContactsApiService,
+    private http: HttpClient) { }
 
   
   async ngOnInit() {
@@ -65,16 +69,24 @@ export class DialogTaskDetailsComponent implements OnInit {
   }
 
 
-  async saveTaskFroArchivToBoard(id: any) {
-    await updateDoc(doc(this.firestore, "tasks", id),
-      {
-        status: 'To do',
-        priority: 'Medium'
-      });
+  async saveTaskFromArchivToBoard(id: any) {
+    let body = {
+      'priority': 'To do',
+      'status': 'Medium'
+    };    
+
+    this.updateTask(body, id)
     this.messageService.showSnackMessage('Task saved in Board!');
 
     setTimeout(() => {
       this.dialog.closeAll();
     }, 1000);
   }
+
+
+  updateTask(body, id) {
+    const url = environment.baseURL + `/tasks/${id}/`;
+    return lastValueFrom(this.http.patch(url, body));
+  }
+
 }

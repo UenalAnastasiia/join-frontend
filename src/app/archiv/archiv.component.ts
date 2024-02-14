@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogRequestComponent } from '../dialog-request/dialog-request.component';
 import { SharedService } from 'src/services/shared.service';
 import { DialogTaskDetailsComponent } from '../task-section/dialog-task-details/dialog-task-details.component';
+import { TasksApiService } from 'src/services/tasks-api.service';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 @Component({
   selector: 'app-archiv',
@@ -19,17 +21,20 @@ export class ArchivComponent implements OnInit {
   todayDate: any;
   searchInput: string;
   noTasks: boolean = true;
+  allContacts: any = [];
 
-  constructor(private firestore: Firestore, public dialog: MatDialog, public shared: SharedService) { }
+  constructor(private firestore: Firestore, public dialog: MatDialog, public shared: SharedService, private taskAPI: TasksApiService, public contactAPI: ContactsApiService) { }
 
-  ngOnInit(): void {
-    const queryCollection = query(collection(this.firestore, "tasks"), where("status", "==", "Archived"));
-    this.archivedTasks$ = collectionData(queryCollection, { idField: "taskID" });
-    this.archivedTasks$.subscribe((data: any) => {
-      this.archivedTasks = data;
+  async ngOnInit() {
+    let taskData = await this.taskAPI.loadAllTasksFromAPI();
+    this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
+    this.renderArchiv(taskData);
+  }
 
-      data.length === 0 ? this.noTasks = true : this.noTasks = false;
-    });
+
+  renderArchiv(tasks) {
+    this.archivedTasks = tasks.filter((obj: { status: string; }) => obj.status == 'Archived');
+    this.archivedTasks.length === 0 ? this.noTasks = true : this.noTasks = false;
   }
   
 

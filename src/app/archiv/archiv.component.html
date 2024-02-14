@@ -21,9 +21,6 @@
         <div *ngFor="let task of archivedTasks | filter:searchInput">
             <div class="task-card hide-icons">
                 <div class="hover-icons">
-                    <mat-icon matTooltip="History" matTooltipPosition="above"
-                        matTooltipClass="tooltip-blue">history</mat-icon>
-
                     <mat-icon matTooltip="Delete task" matTooltipPosition="above" matTooltipClass="tooltip-blue"
                         (click)="openDialogDeleteTask(task.id)">delete</mat-icon>
                 </div>
@@ -32,15 +29,14 @@
                     {{ task.category }}</span>
 
                 <div (click)="openTaskDetails(task.id)">
-                    <span class="task-date" [class.bg-past]="task.dueDate < todayDate">
-                        {{ task.dueDate | date: "MMM" }} {{ task.dueDate | date: "dd" }}, {{ task.dueDate | date: "yyyy"
-                        }}
+                    <span class="task-date" [class.bg-past]="task.due_date < todayDate">
+                        {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
                         <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
                     </span>
                     <h4 class="task-name">{{ task.title }}</h4>
                     <div>
                         <span class="task-assigned" [ngStyle]="{'background': task.color}">
-                            {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
+                            {{ contactAPI.getContact(task.assigned_to, allContacts, 'abbreviation') }}</span>
                         <mat-icon style="color: #7AE229"
                             *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                         <mat-icon style="color: #FF3D00"
