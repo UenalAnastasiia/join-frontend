@@ -98,7 +98,6 @@ export class DialogEditTaskComponent implements OnInit {
     }
 
     this.updateTaskDoc();
-    this.updateTaskHistory(this.taskData.id);
     this.afterSaveTask();
   }
 
@@ -114,17 +113,6 @@ export class DialogEditTaskComponent implements OnInit {
       status: this.taskData.status,
       assignedTo: this.taskData.assignedTo,
       bgColor: this.taskData.bgColor
-    });
-  }
-
-
-  async updateTaskHistory(id: any) {
-    const docRef = doc(this.firestore, 'tasks', id);
-    const colRef = collection(docRef, "history")
-    addDoc(colRef, {
-      historyDate: Date.now(),
-      message: 'Edit Task',
-      change: 'Was changed'
     });
   }
 

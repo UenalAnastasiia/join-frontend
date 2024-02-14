@@ -38,7 +38,6 @@ import { DialogEditContactComponent } from './contact-section/dialog-edit-contac
 import { DialogContactTasksComponent } from './contact-section/dialog-contact-tasks/dialog-contact-tasks.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChunkPipe } from '../services/chunk-pipe';
-import { DialogTaskHistoryComponent } from './task-section/dialog-task-history/dialog-task-history.component';
 import { LoginComponent } from './authentication-section/login/login.component';
 import { getAuth } from 'firebase/auth';
 import { provideAuth } from '@angular/fire/auth';
@@ -69,7 +68,6 @@ import { AuthIntercepterService } from 'src/services/auth-intercepter.service';
     DialogContactTasksComponent,
     CalendarComponent,
     ChunkPipe,
-    DialogTaskHistoryComponent,
     LoginComponent,
     SignInComponent,
     HelpInfoComponent,

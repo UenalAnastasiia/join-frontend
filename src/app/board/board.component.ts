@@ -6,7 +6,6 @@ import { SharedService } from 'src/services/shared.service';
 import { DialogRequestComponent } from '../dialog-request/dialog-request.component';
 import { DialogAddTaskComponent } from '../task-section/dialog-add-task/dialog-add-task.component';
 import { DialogTaskDetailsComponent } from '../task-section/dialog-task-details/dialog-task-details.component';
-import { DialogTaskHistoryComponent } from '../task-section/dialog-task-history/dialog-task-history.component';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -92,17 +91,6 @@ export class BoardComponent implements OnInit {
   }
 
 
-  async updateTaskHistory(id: any) {
-    // const docRef = doc(this.firestore, 'tasks', id);
-    // const colRef = collection(docRef, "history")
-    // addDoc(colRef, {
-    //   historyDate: Date.now(),
-    //   message: 'Edit Task',
-    //   change: 'Was changed'
-    // });
-  }
-
-
   openDialogAddTask(status: string) {
     const dialog = this.dialog.open(DialogAddTaskComponent);
     dialog.componentInstance.taskStatus = status;
@@ -114,12 +102,6 @@ export class BoardComponent implements OnInit {
     const dialog = this.dialog.open(DialogTaskDetailsComponent);
     dialog.componentInstance.task = new Task(this.task.toJSON());
     dialog.componentInstance.task.id = id;
-  }
-
-
-  openDialogHistory(id: any) {
-    const dialog = this.dialog.open(DialogTaskHistoryComponent);
-    dialog.componentInstance.taskID = id;
   }
 
 
