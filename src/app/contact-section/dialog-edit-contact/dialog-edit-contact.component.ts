@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { doc, getDoc } from 'firebase/firestore';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { Contact } from 'src/models/contact.class';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 import { SharedService } from 'src/services/shared.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
 
@@ -23,7 +24,8 @@ export class DialogEditContactComponent implements OnInit {
     private firestore: Firestore,
     public dialog: MatDialog,
     private messageService: SnackBarService,
-    public shared: SharedService) { }
+    public shared: SharedService,
+    private contactsAPI: ContactsApiService) { }
 
   ngOnInit(): void {
     this.dialogRef.updateSize('40vw', '');

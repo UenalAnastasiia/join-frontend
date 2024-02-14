@@ -1,12 +1,13 @@
-<div *ngIf="shared.contactData" class="details-container">
+<div *ngIf="contactsAPI.contactData" class="details-container">
     <div class="info-box">
         <div class="header-name">
-            <span class="contact-symbol" [ngStyle]="{'background': shared.contactData.bgColor}">
-                {{ shared.contactData.firstName[0].toUpperCase() }}{{ shared.contactData.lastName[0].toUpperCase()
+            <span class="contact-symbol" [ngStyle]="{'background': contactsAPI.contactData.bgColor}">
+                {{ contactsAPI.contactData.first_name[0].toUpperCase() }}{{ contactsAPI.contactData.last_name[0].toUpperCase()
                 }}</span>
             <span>
-                <span>{{ shared.contactData.firstName }} {{ shared.contactData.lastName }}</span>
-                <button mat-button (click)="openDialogAddTask(shared.contactData.fullName, shared.contactData.bgColor)">
+                <span>{{ contactsAPI.contactData.first_name }} {{ contactsAPI.contactData.last_name }}</span>
+                <button mat-button 
+                    (click)="openDialogAddTask(contactsAPI.contactData.first_name, contactsAPI.contactData.last_name, contactsAPI.contactData.bgColor)">
                     <mat-icon>add</mat-icon> Add task
                 </button>
             </span>
@@ -16,7 +17,7 @@
             <div class="contact-info-header">
                 <h2>Contact information</h2>
                 <button mat-button matTooltip="Edit Contact" matTooltipPosition="below" matTooltipClass="tooltip-blue"
-                    (click)="openDialogEditContact(shared.contactData.id)">
+                    (click)="openDialogEditContact(contactsAPI.contactData.id)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </div>
@@ -25,24 +26,24 @@
                 <div class="mail-phone">
                     <span>
                         <h3>E-Mail:</h3>
-                        <a href="mailto: {{ shared.contactData.email }}" class="header-color">
-                            <h3>{{ shared.contactData.email }}</h3>
+                        <a href="mailto: {{ contactsAPI.contactData.email }}" class="header-color">
+                            <h3>{{ contactsAPI.contactData.email }}</h3>
                         </a>
                     </span>
 
                     <span>
                         <h3 class="mt-24">Phone:</h3>
-                        <a href="tel: {{ shared.contactData.phone }}">
-                            <h3>{{ shared.contactData.phone }}</h3>
+                        <a href="tel: {{ contactsAPI.contactData.phone }}">
+                            <h3>{{ contactsAPI.contactData.phone }}</h3>
                         </a>
                     </span>
                 </div>
 
                 <div class="tasks-info">
                     <span>
-                        <h3>Tasks for {{ shared.contactData.firstName }}:</h3>
+                        <h3>Tasks for {{ contactsAPI.contactData.first_name }}:</h3>
                         <h3 *ngIf="shared.taskLength >= 1" class="task-length task-length-hover"
-                            (click)="openDialogContactTasks(shared.contactTasks, shared.contactData.firstName)"
+                            (click)="openDialogContactTasks(shared.contactTasks, contactsAPI.contactData.first_name)"
                             matTooltip="Open Tasks" matTooltipPosition="below" matTooltipClass="tooltip-blue">
                             {{ shared.taskLength }}</h3>
                         <h3 *ngIf="shared.taskLength == 0" class="task-length">{{ shared.taskLength }}</h3>

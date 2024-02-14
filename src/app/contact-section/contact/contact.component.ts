@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { collection, orderBy, query } from 'firebase/firestore';
-import { Observable } from 'rxjs';
-import { Contact } from 'src/models/contact.class';
 import { SharedService } from 'src/services/shared.service';
 import { DialogAddContactComponent } from '../dialog-add-contact/dialog-add-contact.component';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 
 @Component({
@@ -14,29 +11,18 @@ import { DialogAddContactComponent } from '../dialog-add-contact/dialog-add-cont
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  contact: Contact = new Contact();
-  allContacts$: Observable<any>;
+  // contact: Contact = new Contact();
+  // allContacts$: Observable<any>;
   allContacts: any = [];
   currentAlphabet: any;
   showDetails: boolean = false;
   searchInput: string;
   activeElmIndex: number;
 
-  constructor(private firestore: Firestore, public dialog: MatDialog, public shared: SharedService) { }
+  constructor(public dialog: MatDialog, public shared: SharedService, public contactsAPI: ContactsApiService) { }
 
-  ngOnInit(): void {
-    this.renderContacts();
-  }
-
-
-  renderContacts() {
-    const contactCollection = collection(this.firestore, 'contacts');
-    const queryCollection = query(contactCollection, orderBy("firstName"));
-    this.allContacts$ = collectionData(queryCollection, { idField: "contactID" });
-
-    this.allContacts$.subscribe((loadData: any) => {
-      this.allContacts = loadData;
-    });
+  async ngOnInit() {
+    this.allContacts = await this.contactsAPI.loadAllContactsFromAPI();   
   }
 
 

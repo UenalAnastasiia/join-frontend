@@ -3,18 +3,18 @@
         <div class="contact-list-box">
             <div class="box-height">
                 <div *ngFor="let contact of allContacts | filter: searchInput; let i = index" class="contact-box">
-                    <div *ngIf="checkLetter(contact.firstName)" class="letter-header">
-                        <h2>{{ contact.firstName.charAt(0).toUpperCase() }}</h2>
+                    <div *ngIf="checkLetter(contact.first_name)" class="letter-header">
+                        <h2>{{ contact.first_name.charAt(0).toUpperCase() }}</h2>
                     </div>
 
                     <div class="info-box"
-                        (click)="showDetails = true; shared.contactID = contact.id; activeElmIndex = i"
+                        (click)="showDetails = true; contactsAPI.contactID = contact.id; activeElmIndex = i"
                         [class.activeElm]="i === activeElmIndex">
                         <div class="contact-symbol" [ngStyle]="{'background': contact.bgColor}">
-                            {{ contact.firstName[0].toUpperCase() }}{{ contact.lastName[0].toUpperCase() }}</div>
+                            {{ contact.first_name[0].toUpperCase() }}{{ contact.last_name[0].toUpperCase() }}</div>
 
                         <div class="contact-info">
-                            <span>{{ contact.firstName }} {{ contact.lastName }}</span>
+                            <span>{{ contact.first_name }} {{ contact.last_name }}</span>
                             <span>{{ contact.email }}</span>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
 
             <div class="contact-details-box">
                 <app-dialog-contact-details *ngIf="showDetails"
-                    [contactID]="shared.contactID"></app-dialog-contact-details>
+                    [contactID]="contactsAPI.contactID"></app-dialog-contact-details>
             </div>
         </div>
 

@@ -1,19 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection, doc, getDoc, orderBy, query } from 'firebase/firestore';
-import { Observable, lastValueFrom } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { ContactsApiService } from './contacts-api.service';
+import { TasksApiService } from './tasks-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  contactID: any;
-  contactData: any;
   archivDialog: boolean = false;
-  allTasks$: Observable<any>;
-  allTasks: any = [];
   filterTasks: any = [];
   taskLength: number;
   contactTasks: any;
@@ -21,39 +14,32 @@ export class SharedService {
   upcomingDeadline: any;
 
 
-  constructor(private firestore: Firestore, private http: HttpClient) {
+  constructor(private contactsAPI: ContactsApiService, private taskAPI: TasksApiService) {
   }
-  
 
-  async loadContactDetails(id: any) {
+
+  public async loadContactDetails(id: any) {
     if (id) {
-      const docRef = doc(this.firestore, "contacts", id);
-      const docSnap = await getDoc(docRef);
-      this.contactData = docSnap.data();
-      this.renderTasksFromContact();
+      let loadedData = await this.contactsAPI.loadContactFromAPI(id);
+      this.contactsAPI.contactData = loadedData[0];
+      
+      let allTasks = await this.taskAPI.loadAllTasksFromAPI();
+      this.renderTasksFromContact(allTasks);
     }
   }
 
 
-  renderTasksFromContact() {
-    const contactCollection = collection(this.firestore, 'tasks');
-    const queryCollection = query(contactCollection, orderBy("dueDate"));
-    this.allTasks$ = collectionData(queryCollection, { idField: "taskID" });
-
-    this.allTasks$.subscribe((loadData: any) => {
-      if (this.contactData) {
-        let filterData = loadData.filter((data: any) => data.assignedTo === this.contactData.fullName && data.status != 'Archived');
-        this.taskLength = filterData.length;
-        this.contactTasks = filterData;
-        this.getUpcomingDeadline(filterData);
-      }
-    });
+  async renderTasksFromContact(allTasks) {
+    // let filterData = allTasks.filter((data: any) => data.assigned_to === this.contactsAPI.contactData.id && data.status != 'Archived');
+    // this.taskLength = filterData.length;
+    // this.contactTasks = filterData;
+    // this.getUpcomingDeadline(filterData);
   }
 
 
   getUpcomingDeadline(taskData: any) {
     let todayDate = new Date().getTime();
-    let filterDate = taskData.filter((data: any) => data.dueDate > todayDate && data.status != 'Archived');
+    let filterDate = taskData.filter((data: any) => data.due_date > todayDate && data.status != 'Archived');
 
     if (filterDate.length >= 1) {
       this.deadlineExist = true;

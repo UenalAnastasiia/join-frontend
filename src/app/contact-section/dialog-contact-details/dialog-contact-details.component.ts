@@ -4,6 +4,7 @@ import { DialogEditContactComponent } from '../dialog-edit-contact/dialog-edit-c
 import { SharedService } from 'src/services/shared.service';
 import { DialogContactTasksComponent } from '../dialog-contact-tasks/dialog-contact-tasks.component';
 import { DialogAddTaskComponent } from 'src/app/task-section/dialog-add-task/dialog-add-task.component';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { DialogAddTaskComponent } from 'src/app/task-section/dialog-add-task/dia
 export class DialogContactDetailsComponent implements OnInit, OnChanges {
   @Input() contactID: any;
 
-  constructor(public dialog: MatDialog, public shared: SharedService) { }
+  constructor(public dialog: MatDialog, public shared: SharedService, public contactsAPI: ContactsApiService) { }
 
   ngOnInit(): void {
   }
@@ -25,7 +26,8 @@ export class DialogContactDetailsComponent implements OnInit, OnChanges {
   }
 
 
-  openDialogAddTask(name: string, color: any) {
+  openDialogAddTask(firstName: string, lastName: string, color: any) {
+    let name = firstName + lastName;
     const dialog = this.dialog.open(DialogAddTaskComponent);
     dialog.componentInstance.contactName = name;
     dialog.componentInstance.contactBG = color;
