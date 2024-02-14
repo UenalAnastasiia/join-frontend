@@ -18,7 +18,7 @@
 
         <span class="date-span">
             <p>Due date:</p>
-            <p>{{ taskData.due_date | date: "MMM" }} {{ taskData.due_date | date: "dd" }}, {{ taskData.dueDdue_dateate | date:"yyyy" }}</p>
+            <p>{{ taskData.due_date | date: "MMM" }} {{ taskData.due_date | date: "dd" }}, {{ taskData.due_date | date:"yyyy" }}</p>
             <span *ngIf="taskData.due_date < todayDate">
                 <mat-icon>notification_important</mat-icon>
                 Deadline has been exceeded!
@@ -37,7 +37,7 @@
 
         <span>
             <p>Assigned To:</p>
-            <p [ngStyle]="{'color': taskData.bgColor}">{{ userAPI.getUser(taskData.assigned_to, allUsers, 'full') }}</p>
+            <p [ngStyle]="{'color': taskData.color}">{{ contactAPI.getContact(taskData.assigned_to, allContacts, 'full') }}</p>
         </span>
 
         <span>

@@ -27,7 +27,7 @@
                     </span>
                     <h4 class="task-name">{{ task.title }}</h4>
                     <div>
-                        <span class="task-assigned" [ngStyle]="{'background': task.bgColor}">
+                        <span class="task-assigned" [ngStyle]="{'background': task.color}">
                             {{ task.assignedTo.split(" ")[0][0] }}{{task.assignedTo.split(" ")[1][0] }}</span>
                         <mat-icon style="color: #7AE229"
                             *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>

@@ -29,12 +29,12 @@ export class DialogAddContactComponent implements OnInit {
 
   async saveContact() {
     let color = Math.floor(0x1000000 * Math.random()).toString(16);
-    this.contact.bgColor = '#' + ('000000' + color).slice(-6);
+    this.contact.color = '#' + ('000000' + color).slice(-6);
 
     const taskCollection = collection(this.firestore, 'contacts');
     const docRef = await addDoc(taskCollection, this.contact.toJSON());
     this.contact.id = docRef.id;
-    this.contact.fullName = this.contact.firstName + ' ' + this.contact.lastName;
+    this.contact.full_name = this.contact.firstName + ' ' + this.contact.lastName;
     await setDoc(doc(this.firestore, 'contacts', docRef.id), this.contact.toJSON());
     this.loadSpinner = true;
 

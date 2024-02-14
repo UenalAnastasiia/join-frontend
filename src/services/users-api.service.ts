@@ -26,9 +26,8 @@ export class UsersApiService {
   public getUser(id: number, userObjects: any[], format: string) {
     if (id && userObjects) {
       let user = userObjects.filter((obj) => obj.id == id);
-
       let abbrName = user[0].first_name[0] + user[0].last_name[0];
-      let fullName = user[0].first_name + ' ' + user[0].last_name;
+      let fullName = user[0].full_name;
       if (format === 'abbreviation') { return abbrName } else return fullName 
     }
   }

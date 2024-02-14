@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
-import { collectionData, Firestore } from '@angular/fire/firestore';
-import { addDoc, collection, doc, orderBy, query, setDoc } from 'firebase/firestore';
 import { MatInput } from '@angular/material/input';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FormControl, Validators } from '@angular/forms';
+import { ContactsApiService } from 'src/services/contacts-api.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -42,8 +43,8 @@ export class DialogAddTaskComponent implements OnInit {
     { name: 'low', icon: 'keyboard_double_arrow_down' },
   ];
 
-  categoryList: any[] = ["Frontend", "Backend", "Design", "Marketing", "Backoffice", "Other"];
-  statusList: any[] = ["To do", "In progress", "Awaiting Feedback", "Done"];
+  categoryList: any[] = ['Frontend', 'Backend', 'Design', 'Marketing', 'Backoffice', 'Other'];
+  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
   title = new FormControl('', [Validators.required, Validators.minLength(1)]);
   description = new FormControl('', [Validators.required, Validators.minLength(1)]);
@@ -53,9 +54,10 @@ export class DialogAddTaskComponent implements OnInit {
   assignedTo = new FormControl('', [Validators.required]);
 
   constructor(public dialogRef: MatDialogRef<DialogAddTaskComponent>,
-    private firestore: Firestore,
     public dialog: MatDialog,
-    public auth: AuthenticationService) {
+    public auth: AuthenticationService,
+    public contactsAPI: ContactsApiService,
+    private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -66,21 +68,15 @@ export class DialogAddTaskComponent implements OnInit {
     }
     if (this.contactName) {
       this.hideHolder = false;
-      this.task.assignedTo = this.contactName;
-      this.task.bgColor = this.contactBG;
+      this.task.assigned_to = this.contactName;
+      this.task.color = this.contactBG;
     }
     this.loadContacts();
   }
 
 
-  loadContacts() {
-    const contactCollection = collection(this.firestore, 'contacts');
-    const queryCollection = query(contactCollection, orderBy("firstName"));
-    this.allContacts$ = collectionData(queryCollection, { idField: "contactID" });
-
-    this.allContacts$.subscribe((loadData: any) => {
-      this.allContacts = loadData;
-    });
+  async loadContacts() {
+    this.allContacts = this.allContacts = await this.contactsAPI.loadAllContactsFromAPI();
   }
 
 
@@ -92,22 +88,35 @@ export class DialogAddTaskComponent implements OnInit {
   
   getSelectedContact(selectedContact: any) {  
       this.hideHolder = true;
-      this.task.assignedTo = selectedContact.fullName;
-      this.task.bgColor = selectedContact.bgColor;
+      this.task.assigned_to = selectedContact.id;
+      this.task.color = selectedContact.color;
   }
 
 
   async saveTask() {
-    this.task.dueDate = this.dueDate.getTime();
+    this.task.due_date = this.dueDate.getFullYear() + '-' + (('0'+ (this.dueDate.getMonth() + 1)).slice(-2)) + '-' + ('0'+ this.dueDate.getDate()).slice(-2);
+    const authToken: any = JSON.parse(localStorage.getItem('user') || '"');
     this.auth.getLoggedUser();
-    this.auth.userName === undefined ? this.task.editor = 'Guest' : this.task.editor = this.auth.userName;
-    const taskCollection = collection(this.firestore, 'tasks');
-    const docRef = await addDoc(taskCollection, this.task.toJSON());
-    this.task.id = docRef.id;
-    await setDoc(doc(this.firestore, 'tasks', docRef.id), this.task.toJSON());
+    this.auth.userName === undefined ? this.task.editor = null : this.task.editor = authToken['id'];
+    let body = {
+      'assigned_to': this.task.assigned_to, 
+      'category': this.task.category, 
+      'description': this.task.description, 
+      'due_date': this.task.due_date,
+      'editor': this.task.editor,
+      'priority': this.task.priority,
+      'status': this.task.status,
+      'title': this.task.title
+    };    
+    this.postTask(body);
     this.loadSpinner = true;
-
     this.afterSaveTask();
+  }
+
+
+  postTask(body) {
+    const url = environment.baseURL + '/tasks/';
+    return lastValueFrom(this.http.post(url, body));
   }
 
 

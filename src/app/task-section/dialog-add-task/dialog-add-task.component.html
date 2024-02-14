@@ -64,7 +64,7 @@
                     (change)="getSelectedContact(selectedContact)" [formControl]="assignedTo">
                     <option [ngValue]="undefined" [disabled]="true">Assigned to...</option>
                     <option [ngValue]="contact" *ngFor="let contact of allContacts">
-                        {{ contact.firstName }} {{ contact.lastName }}</option>
+                        {{ contact.full_name }}</option>
                 </select>
             </div>
 

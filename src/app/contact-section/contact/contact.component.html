@@ -10,7 +10,7 @@
                     <div class="info-box"
                         (click)="showDetails = true; contactsAPI.contactID = contact.id; activeElmIndex = i"
                         [class.activeElm]="i === activeElmIndex">
-                        <div class="contact-symbol" [ngStyle]="{'background': contact.bgColor}">
+                        <div class="contact-symbol" [ngStyle]="{'background': contact.color}">
                             {{ contact.first_name[0].toUpperCase() }}{{ contact.last_name[0].toUpperCase() }}</div>
 
                         <div class="contact-info">

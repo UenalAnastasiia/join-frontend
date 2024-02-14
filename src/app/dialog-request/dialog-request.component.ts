@@ -5,6 +5,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
+import { TasksApiService } from 'src/services/tasks-api.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class DialogRequestComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogRequestComponent>, 
     private firestore: Firestore, 
     private messageService: SnackBarService,
-    public auth: AuthenticationService) { }
+    public auth: AuthenticationService,
+    private taskAPI: TasksApiService) { }
 
   ngOnInit(): void {
   }
@@ -95,8 +97,8 @@ export class DialogRequestComponent implements OnInit {
 
 
   async deleteContactDoc() {
-    await deleteDoc(doc(this.firestore, "contacts", this.contactID));
-
+    this.taskAPI.deleteTask(this.contactID);
+    
     setTimeout(() => {
       this.dialog.closeAll();
     }, 1000);

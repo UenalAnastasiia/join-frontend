@@ -1,19 +1,19 @@
 export class Contact {
     firstName: string;
     lastName: string;
-    fullName: string;
+    full_name: string;
     email: string;
     phone: any;
-    bgColor: any;
+    color: any;
     id: string;
 
     constructor(obj?: any) {
         this.firstName = obj ? obj.firstName : '';
         this.lastName = obj ? obj.lastName : '';
-        this.fullName = obj ? obj.fullName : '';
+        this.full_name = obj ? obj.full_name : '';
         this.email = obj ? obj.email : '';
         this.phone = obj ? obj.phone : '';
-        this.bgColor = obj ? obj.bgColor : '';
+        this.color = obj ? obj.color : '';
         this.id = obj ? obj.id : '';
     }
 
@@ -21,10 +21,10 @@ export class Contact {
         return {
             firstName: this.firstName,
             lastName: this.lastName,
-            fullName: this.fullName,
+            full_name: this.full_name,
             email: this.email,
             phone: this.phone,
-            bgColor: this.bgColor,
+            color: this.color,
             id: this.id
         }
     }

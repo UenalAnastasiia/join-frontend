@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
-import { UsersApiService } from 'src/services/users-api.service';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 @Component({
   selector: 'app-board',
@@ -23,6 +23,7 @@ export class BoardComponent implements OnInit {
   // taskID: string;
   todayDate: any;
   allUsers: any = [];
+  allContacts: any = [];
   todoTask: any;
   inprogressTask: any = [];
   awaitingfeedbackTask: any = [];
@@ -33,7 +34,7 @@ export class BoardComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
-    public userAPI: UsersApiService) { }
+    public contactAPI: ContactsApiService) { }
 
   ngOnInit() {
     this.todayDate = new Date().getTime();
@@ -42,7 +43,7 @@ export class BoardComponent implements OnInit {
 
 
   async renderBoard() {
-    this.allUsers = await this.userAPI.loadAllUsersFromAPI();
+    this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     let allTasks = await this.taskAPI.loadAllTasksFromAPI();
     this.renderAllTasks(allTasks);   
   }

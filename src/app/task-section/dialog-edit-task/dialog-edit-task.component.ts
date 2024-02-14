@@ -85,8 +85,8 @@ export class DialogEditTaskComponent implements OnInit {
 
   getSelectedContact() {
     this.hideHolder = true;
-    this.taskData.assignedTo = this.contactName.fullName;
-    this.taskData.bgColor = this.contactName.bgColor;
+    this.taskData.assignedTo = this.contactName.full_name;
+    this.taskData.color = this.contactName.color;
   }
 
 
@@ -112,7 +112,7 @@ export class DialogEditTaskComponent implements OnInit {
       priority: this.taskData.priority,
       status: this.taskData.status,
       assignedTo: this.taskData.assignedTo,
-      bgColor: this.taskData.bgColor
+      color: this.taskData.color
     });
   }
 

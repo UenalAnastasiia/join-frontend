@@ -21,4 +21,10 @@ export class TasksApiService {
     const url = environment.baseURL + `/tasks/${id}/`;
     return lastValueFrom(this.http.get(url));
   }
+
+
+  public deleteTask(id: number) {
+    const url = environment.baseURL + '/tasks/' + id;
+    return lastValueFrom(this.http.delete(url));
+  }
 }

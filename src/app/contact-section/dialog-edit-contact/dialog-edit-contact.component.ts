@@ -47,7 +47,7 @@ export class DialogEditContactComponent implements OnInit {
       {
         firstName: this.contactData.firstName,
         lastName: this.contactData.lastName,
-        fullName: this.contactData.fullName,
+        full_name: this.contactData.full_name,
         email: this.contactData.email,
         phone: this.contactData.phone
       });

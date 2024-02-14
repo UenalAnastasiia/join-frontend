@@ -23,4 +23,15 @@ export class ContactsApiService {
     const url = environment.baseURL + `/contacts/${id}/`;
     return lastValueFrom(this.http.get(url));
   }
+
+
+  public getContact(id: number, contactObjects: any[], format: string) {
+    if (id && contactObjects) {
+      let contact = contactObjects.filter((obj) => obj.id == id);
+
+      let abbrName = contact[0].first_name[0] + contact[0].last_name[0];
+      let fullName = contact[0].full_name;
+      if (format === 'abbreviation') { return abbrName } else return fullName 
+    }
+  }
 }

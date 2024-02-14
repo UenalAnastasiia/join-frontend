@@ -9,6 +9,7 @@ import { DialogEditTaskComponent } from '../dialog-edit-task/dialog-edit-task.co
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { UsersApiService } from 'src/services/users-api.service';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class DialogTaskDetailsComponent implements OnInit {
   taskData: any = [];
   task: Task;
   todayDate: any;
-  allUsers: any = [];
+  allContacts: any = [];
   showData: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogTaskDetailsComponent>, 
@@ -30,12 +31,13 @@ export class DialogTaskDetailsComponent implements OnInit {
     public shared: SharedService,
     public messageService: SnackBarService,
     private taskAPI: TasksApiService,
-    public userAPI: UsersApiService) { }
+    public userAPI: UsersApiService,
+    public contactAPI: ContactsApiService) { }
 
   
   async ngOnInit() {
     this.dialogRef.updateSize('35vw', '');
-    this.allUsers = await this.userAPI.loadAllUsersFromAPI();
+    this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     this.loadTask();
     this.todayDate = new Date().getTime();
     setTimeout(() => {

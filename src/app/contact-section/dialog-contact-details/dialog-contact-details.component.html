@@ -1,13 +1,13 @@
 <div *ngIf="contactsAPI.contactData" class="details-container">
     <div class="info-box">
         <div class="header-name">
-            <span class="contact-symbol" [ngStyle]="{'background': contactsAPI.contactData.bgColor}">
+            <span class="contact-symbol" [ngStyle]="{'background': contactsAPI.contactData.color}">
                 {{ contactsAPI.contactData.first_name[0].toUpperCase() }}{{ contactsAPI.contactData.last_name[0].toUpperCase()
                 }}</span>
             <span>
                 <span>{{ contactsAPI.contactData.first_name }} {{ contactsAPI.contactData.last_name }}</span>
                 <button mat-button 
-                    (click)="openDialogAddTask(contactsAPI.contactData.first_name, contactsAPI.contactData.last_name, contactsAPI.contactData.bgColor)">
+                    (click)="openDialogAddTask(contactsAPI.contactData.first_name, contactsAPI.contactData.last_name, contactsAPI.contactData.color)">
                     <mat-icon>add</mat-icon> Add task
                 </button>
             </span>

@@ -2,24 +2,24 @@ export class Task {
     title: string;
     description: string;
     category: string;
-    dueDate: number;
+    due_date: any;
     priority: string;
-    assignedTo: string;
+    assigned_to: string;
     status: string;
     id: string;
-    bgColor: any;
+    color: any;
     editor: any;
 
     constructor(obj?: any) {
         this.title = obj ? obj.title : '';
         this.description = obj ? obj.description : '';
         this.category = obj ? obj.category : '';
-        this.dueDate = obj ? obj.dueDate : '';
+        this.due_date = obj ? obj.due_date : '';
         this.priority = obj ? obj.priority : '';
-        this.assignedTo = obj ? obj.assignedTo : '';
+        this.assigned_to = obj ? obj.assigned_to : '';
         this.status = obj ? obj.status : '';
         this.id = obj ? obj.id : '';
-        this.bgColor = obj ? obj.bgColor : '';
+        this.color = obj ? obj.color : '';
         this.editor = obj ? obj.editor : '';
     }
 
@@ -28,12 +28,12 @@ export class Task {
             title: this.title,
             description: this.description,
             category: this.category,
-            dueDate: this.dueDate,
+            due_date: this.due_date,
             priority: this.priority,
-            assignedTo: this.assignedTo,
+            assigned_to: this.assigned_to,
             status: this.status,
             id: this.id,
-            bgColor: this.bgColor,
+            color: this.color,
             editor: this.editor
         }
     }
