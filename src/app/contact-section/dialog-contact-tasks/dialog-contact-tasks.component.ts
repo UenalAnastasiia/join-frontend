@@ -13,13 +13,11 @@ import { SharedService } from 'src/services/shared.service';
 export class DialogContactTasksComponent implements OnInit {
   taskData: any;
   contactName: string;
-  todayDate: any;
   task: Task = new Task();
 
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<DialogContactTasksComponent>, public shared: SharedService) { }
 
   ngOnInit(): void {
-    this.todayDate = new Date().getTime();
   }
 
 

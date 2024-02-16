@@ -12,9 +12,12 @@ export class SharedService {
   contactTasks: any;
   deadlineExist: boolean = false;
   upcomingDeadline: any;
+  todayDate: any;
 
 
   constructor(private contactsAPI: ContactsApiService, private taskAPI: TasksApiService) {
+    let t = new Date();
+    this.todayDate = t.getFullYear() + '-' + (('0'+ (t.getMonth() + 1)).slice(-2)) + '-' + ('0'+ t.getDate()).slice(-2);  
   }
 
 
@@ -38,13 +41,12 @@ export class SharedService {
 
 
   getUpcomingDeadline(taskData: any) {
-    let todayDate = new Date().getTime();
-    let filterDate = taskData.filter((data: any) => data.due_date > todayDate && data.status != 'Archived');
+    let filterDate = taskData.filter((data: any) => data.due_date > this.todayDate && data.status != 'Archived');
 
     if (filterDate.length >= 1) {
       this.deadlineExist = true;
       let dateMap = filterDate.map((data: any) => data.due_date);
-      this.upcomingDeadline = new Date(Math.min.apply(null, dateMap));
+      this.upcomingDeadline = dateMap[0];
     } else {
       this.deadlineExist = false;
     }

@@ -7,6 +7,7 @@ import { ContactsApiService } from 'src/services/contacts-api.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
+import { SharedService } from 'src/services/shared.service';
 
 @Component({
   selector: 'app-dialog-edit-task',
@@ -24,7 +25,6 @@ export class DialogEditTaskComponent implements OnInit {
   minDate: Date;
   taskStatus: string;
   dateChange: boolean = false;
-  todayDate: any;
   contactName: any;
   loadSpinner: boolean = false;
   showData: boolean = false;
@@ -46,7 +46,8 @@ export class DialogEditTaskComponent implements OnInit {
     private messageService: SnackBarService,
     public contactAPI: ContactsApiService,
     private taskAPI: TasksApiService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    public shared: SharedService) { }
 
 
   async ngOnInit() {
@@ -54,7 +55,6 @@ export class DialogEditTaskComponent implements OnInit {
     this.dialogRef.updateSize('70vw', '');
     this.renderEditTask();
     this.minDate = new Date();
-    this.todayDate = new Date().getTime();
 
     setTimeout(() => {
       this.showData = true;

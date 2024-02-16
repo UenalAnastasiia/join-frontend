@@ -17,6 +17,8 @@ import { UsersApiService } from './users-api.service';
 })
 export class AuthenticationService {
   userName: string;
+  firstName: string;
+  fullName: string;
   userImg: any;
   userEmail: string;
   errorResetMessage: any;
@@ -56,6 +58,8 @@ export class AuthenticationService {
     if (JSONdata) {
       let loggedUser = await this.userAPI.loadUserFromAPI(JSONdata.id);
       this.userName = loggedUser[0]['username'];
+      this.firstName = loggedUser[0]['first_name'];
+      this.fullName = loggedUser[0]['first_name'] + ' ' + loggedUser[0]['last_name'];
       this.userEmail = loggedUser[0]['email'];
       //this.userImg
     } 

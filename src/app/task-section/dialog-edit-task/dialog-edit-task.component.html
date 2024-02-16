@@ -10,7 +10,7 @@
     
         <div class="task-h">
             <h1>Edit Task</h1>
-            <div *ngIf="taskData.due_date < todayDate">
+            <div *ngIf="taskData.due_date < shared.todayDate">
                 <mat-icon>notification_important</mat-icon>
                 <span>Deadline has been exceeded!</span>
             </div>

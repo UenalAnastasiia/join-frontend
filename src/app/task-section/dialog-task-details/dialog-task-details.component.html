@@ -19,7 +19,7 @@
         <span class="date-span">
             <p>Due date:</p>
             <p>{{ taskData.due_date | date: "MMM" }} {{ taskData.due_date | date: "dd" }}, {{ taskData.due_date | date:"yyyy" }}</p>
-            <span *ngIf="taskData.due_date < todayDate">
+            <span *ngIf="taskData.due_date < shared.todayDate">
                 <mat-icon>notification_important</mat-icon>
                 Deadline has been exceeded!
             </span>

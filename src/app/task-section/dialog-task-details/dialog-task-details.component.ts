@@ -24,7 +24,6 @@ export class DialogTaskDetailsComponent implements OnInit {
   taskID: any;
   taskData: any = [];
   task: Task;
-  todayDate: any;
   allContacts: any = [];
   showData: boolean = false;
 
@@ -43,8 +42,6 @@ export class DialogTaskDetailsComponent implements OnInit {
     this.dialogRef.updateSize('35vw', '');
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     this.loadTask();
-    let today = new Date();
-    this.todayDate = today.getFullYear() + '-' + (('0'+ (today.getMonth() + 1)).slice(-2)) + '-' + ('0'+ today.getDate()).slice(-2);  
     setTimeout(() => {
       this.showData = true;
     }, 1000);

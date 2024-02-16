@@ -20,8 +20,6 @@ import { ContactsApiService } from 'src/services/contacts-api.service';
 })
 export class BoardComponent implements OnInit {
   task: Task = new Task();
-  // taskID: string;
-  todayDate: any;
   allUsers: any = [];
   allContacts: any = [];
   todoTask: any;
@@ -37,8 +35,6 @@ export class BoardComponent implements OnInit {
     public contactAPI: ContactsApiService) { }
 
   ngOnInit() {
-    let today = new Date();
-    this.todayDate = today.getFullYear() + '-' + (('0'+ (today.getMonth() + 1)).slice(-2)) + '-' + ('0'+ today.getDate()).slice(-2);  
     this.renderBoard();
   }
 
