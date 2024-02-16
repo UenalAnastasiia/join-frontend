@@ -49,10 +49,8 @@
                         {{ c.date.getDate() }}
                     </div>
                     <div class="task-title-box">
-                        <div *ngFor="let task of allTasks">
-                            <span (click)="openTaskDetails(task.id)" [style.color]="shared.getCategoryColor(task.category)"
-                                class="showTask"
-                                [ngClass]="{'hideTask': c.date != getTimeFormat(task.due_date), 'showTask': c.date === getTimeFormat(task.due_date)}"
+                        <div *ngFor="let task of allTasks; let t = index">
+                            <span (click)="openTaskDetails(task.id)" [style.color]="shared.getCategoryColor(task.category)" *ngIf="isSameDate(task.due_date, c.date)"
                                 matTooltip="{{task.title}}" matTooltipPosition="above" matTooltipClass="tooltip-blue">
                                 <mat-icon>circle</mat-icon>
                             </span>

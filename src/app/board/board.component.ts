@@ -37,7 +37,8 @@ export class BoardComponent implements OnInit {
     public contactAPI: ContactsApiService) { }
 
   ngOnInit() {
-    this.todayDate = new Date().getTime();
+    let today = new Date();
+    this.todayDate = today.getFullYear() + '-' + (('0'+ (today.getMonth() + 1)).slice(-2)) + '-' + ('0'+ today.getDate()).slice(-2);  
     this.renderBoard();
   }
 

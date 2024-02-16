@@ -31,7 +31,7 @@
                 <div (click)="openTaskDetails(task.id)">
                     <span class="task-date" [class.bg-past]="task.due_date < todayDate">
                         {{ task.due_date | date: "MMM" }} {{ task.due_date | date: "dd" }}, {{ task.due_date | date: "yyyy" }}
-                        <mat-icon *ngIf="task.dueDate < todayDate">notification_important</mat-icon>
+                        <mat-icon *ngIf="task.due_date < todayDate">notification_important</mat-icon>
                     </span>
                     <h4 class="task-name">{{ task.title }}</h4>
                     <div>

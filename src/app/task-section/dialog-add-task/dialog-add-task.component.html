@@ -35,7 +35,7 @@
 
         <div class="right-box">
             <mat-form-field class="input-shadow input-box height-36">
-                <mat-label for="dueDate">Due Date</mat-label>
+                <mat-label for="due_date">Due Date</mat-label>
                 <input #dateInput [min]="minDate" matInput [matDatepicker]="picker" placeholder="mm/dd/yyyy"
                     [(ngModel)]="dueDate" [formControl]="datepicker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

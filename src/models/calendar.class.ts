@@ -3,6 +3,7 @@ export class CalendarDay {
     public title: string;
     public isPastDate: boolean;
     public isToday: boolean;
+    public tasks;
   
     public getDateString() {
       return this.date.toISOString().split("T")[0]
@@ -10,6 +11,7 @@ export class CalendarDay {
   
     constructor(d: Date) {
       this.date = d;
+      this.tasks = 
       this.isPastDate = d.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0);
       this.isToday = d.setHours(0, 0, 0, 0) == new Date().setHours(0, 0, 0, 0);
     }

@@ -48,12 +48,14 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < 42; i++) {
       this.calendar.push(new CalendarDay(new Date(dateToAdd)));
       dateToAdd = new Date(dateToAdd.setDate(dateToAdd.getDate() + 1));
-    }    
+    }  
   }
 
 
-  getTimeFormat(date) {
-    return new Date(date);
+  isSameDate(date: string, cDate: Date) {
+    let taskDate = date;
+    let calendarDate = cDate.getFullYear() + '-' + (('0'+ (cDate.getMonth() + 1)).slice(-2)) + '-' + ('0'+ cDate.getDate()).slice(-2);  
+    if (taskDate === calendarDate) { return true } else return false
   }
 
 
