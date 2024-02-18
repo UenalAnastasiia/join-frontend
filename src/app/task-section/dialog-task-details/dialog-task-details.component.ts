@@ -69,8 +69,8 @@ export class DialogTaskDetailsComponent implements OnInit {
 
   async saveTaskFromArchivToBoard(id: any) {
     let body = {
-      'priority': 'To do',
-      'status': 'Medium'
+      'priority': 'medium',
+      'status': 'To do',
     };    
 
     this.updateTask(body, id)

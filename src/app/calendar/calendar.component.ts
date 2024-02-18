@@ -54,7 +54,7 @@ export class CalendarComponent implements OnInit {
 
   isSameDate(date: string, cDate: Date) {
     let taskDate = date;
-    let calendarDate = cDate.getFullYear() + '-' + (('0'+ (cDate.getMonth() + 1)).slice(-2)) + '-' + ('0'+ cDate.getDate()).slice(-2);  
+    let calendarDate = this.shared.formatdate(cDate);
     if (taskDate === calendarDate) { return true } else return false
   }
 

@@ -9,6 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ContactsApiService } from 'src/services/contacts-api.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { SharedService } from 'src/services/shared.service';
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -57,7 +58,8 @@ export class DialogAddTaskComponent implements OnInit {
     public dialog: MatDialog,
     public auth: AuthenticationService,
     public contactsAPI: ContactsApiService,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private shared: SharedService) {
   }
 
   ngOnInit(): void {
@@ -94,7 +96,7 @@ export class DialogAddTaskComponent implements OnInit {
 
 
   async saveTask() {
-    this.task.due_date = this.dueDate.getFullYear() + '-' + (('0'+ (this.dueDate.getMonth() + 1)).slice(-2)) + '-' + ('0'+ this.dueDate.getDate()).slice(-2);
+    this.task.due_date = this.shared.formatdate(this.dueDate);
     const authToken: any = JSON.parse(localStorage.getItem('user') || '"');
     this.auth.getLoggedUser();
     this.auth.userName === undefined ? this.task.editor = null : this.task.editor = authToken['id'];

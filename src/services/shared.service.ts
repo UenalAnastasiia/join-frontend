@@ -17,7 +17,7 @@ export class SharedService {
 
   constructor(private contactsAPI: ContactsApiService, private taskAPI: TasksApiService) {
     let t = new Date();
-    this.todayDate = t.getFullYear() + '-' + (('0'+ (t.getMonth() + 1)).slice(-2)) + '-' + ('0'+ t.getDate()).slice(-2);  
+    this.todayDate = this.formatdate(t);  
   }
 
 
@@ -40,7 +40,7 @@ export class SharedService {
   }
 
 
-  getUpcomingDeadline(taskData: any) {
+  public getUpcomingDeadline(taskData: any) {
     let filterDate = taskData.filter((data: any) => data.due_date > this.todayDate && data.status != 'Archived');
 
     if (filterDate.length >= 1) {
@@ -53,7 +53,7 @@ export class SharedService {
   }
 
 
-  getCategoryColor(priority: string) {
+  public getCategoryColor(priority: string) {
     switch (priority) {
       case 'Frontend': return 'rgb(115 26 203)';
       case 'Backend': return 'rgb(69 139 127)';
@@ -63,5 +63,9 @@ export class SharedService {
       case 'Other': return '#FC71FF';
       default: return '';
     }
+  }
+
+  public formatdate(d: Date) {
+      return d.getFullYear() + '-' + (('0'+ (d.getMonth() + 1)).slice(-2)) + '-' + ('0'+ d.getDate()).slice(-2);
   }
 }

@@ -88,7 +88,7 @@ export class DialogEditTaskComponent implements OnInit {
     this.loadSpinner = true;
     
     if (this.dateChange === true) {
-      this.taskData.due_date = this.taskData.due_date.getFullYear() + '-' + (('0'+ (this.taskData.due_date.getMonth() + 1)).slice(-2)) + '-' + ('0'+ this.taskData.due_date.getDate()).slice(-2);
+      this.taskData.due_date = this.shared.formatdate(this.taskData.due_date);
     }
 
     this.updateTaskDoc();
@@ -99,6 +99,7 @@ export class DialogEditTaskComponent implements OnInit {
   updateTaskDoc() {
     let body = {
       'assigned_to': this.taskData.assigned_to, 
+      'color': this.taskData.color, 
       'category': this.taskData.category, 
       'description': this.taskData.description, 
       'due_date': this.taskData.due_date,
