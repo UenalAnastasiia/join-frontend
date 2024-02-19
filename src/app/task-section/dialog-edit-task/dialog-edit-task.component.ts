@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { lastValueFrom } from 'rxjs';
 import { SnackBarService } from 'src/services/snack-bar.service';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { ContactsApiService } from 'src/services/contacts-api.service';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { SharedService } from 'src/services/shared.service';
 import { BoardStatusApiService } from 'src/services/board-status-api.service';
@@ -47,7 +44,6 @@ export class DialogEditTaskComponent implements OnInit {
     private messageService: SnackBarService,
     public contactAPI: ContactsApiService,
     private taskAPI: TasksApiService,
-    private http: HttpClient,
     public shared: SharedService,
     public statusAPI: BoardStatusApiService) { }
 
@@ -109,9 +105,9 @@ export class DialogEditTaskComponent implements OnInit {
       'priority': this.taskData.priority,
       'status': this.taskData.status,
       'title': this.taskData.title
-    };    
-    const url = environment.baseURL + `/tasks/${this.taskData.id}/`;
-    return lastValueFrom(this.http.patch(url, body));
+    };   
+    
+    this.taskAPI.patchTask(this.taskData.id, body);
   }
 
 

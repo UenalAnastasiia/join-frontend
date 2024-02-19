@@ -280,11 +280,16 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
     background: #9327FF;
     color: white;
     border-radius: 50%;
-    font-size: 18px;
     font-weight: 600;
     width: fit-content;
     height: fit-content;
     padding: 8px;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hover-icons {

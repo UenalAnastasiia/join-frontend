@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Task } from 'src/models/task.class';
 import { SharedService } from 'src/services/shared.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
@@ -10,9 +8,6 @@ import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.co
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { UsersApiService } from 'src/services/users-api.service';
 import { ContactsApiService } from 'src/services/contacts-api.service';
-import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -28,14 +23,12 @@ export class DialogTaskDetailsComponent implements OnInit {
   showData: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogTaskDetailsComponent>, 
-    private firestore: Firestore, 
     public dialog: MatDialog, 
     public shared: SharedService,
     public messageService: SnackBarService,
     private taskAPI: TasksApiService,
     public userAPI: UsersApiService,
-    public contactAPI: ContactsApiService,
-    private http: HttpClient) { }
+    public contactAPI: ContactsApiService) { }
 
   
   async ngOnInit() {
@@ -71,19 +64,11 @@ export class DialogTaskDetailsComponent implements OnInit {
     let body = {
       'priority': 'medium'
     };    
-
-    this.updateTask(body, id)
+    this.taskAPI.patchTask(id, body);
     this.messageService.showSnackMessage('Task saved in Board!');
 
     setTimeout(() => {
       this.dialog.closeAll();
     }, 1000);
   }
-
-
-  updateTask(body, id) {
-    const url = environment.baseURL + `/tasks/${id}/`;
-    return lastValueFrom(this.http.patch(url, body));
-  }
-
 }

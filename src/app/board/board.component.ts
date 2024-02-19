@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
@@ -6,9 +6,6 @@ import { SharedService } from 'src/services/shared.service';
 import { DialogRequestComponent } from '../dialog-request/dialog-request.component';
 import { DialogAddTaskComponent } from '../task-section/dialog-add-task/dialog-add-task.component';
 import { DialogTaskDetailsComponent } from '../task-section/dialog-task-details/dialog-task-details.component';
-import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { ContactsApiService } from 'src/services/contacts-api.service';
 import { BoardStatusApiService } from 'src/services/board-status-api.service';
@@ -28,7 +25,7 @@ export class BoardComponent implements OnInit {
   statusList: any = [];
 
 
-  constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
+  constructor(public dialog: MatDialog, public shared: SharedService, private taskAPI: TasksApiService,
     public contactAPI: ContactsApiService, public statusAPI: BoardStatusApiService) { }
 
   ngOnInit() {
@@ -50,10 +47,9 @@ export class BoardComponent implements OnInit {
   }
 
 
-  async updateTaskStatus(taskID: any, stat: any) {    
-    const url = environment.baseURL + `/tasks/${taskID}/`;
-    let body = {status : stat}
-    return lastValueFrom(this.http.patch(url, body));
+  updateTaskStatus(taskID: any, stat: any) {    
+    let body = {status : stat};
+    this.taskAPI.patchTask(taskID, body);
   }
 
 

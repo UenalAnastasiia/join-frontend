@@ -2,15 +2,14 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
 import { MatInput } from '@angular/material/input';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ContactsApiService } from 'src/services/contacts-api.service';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { SharedService } from 'src/services/shared.service';
 import { BoardStatusApiService } from 'src/services/board-status-api.service';
+import { TasksApiService } from 'src/services/tasks-api.service';
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -59,9 +58,9 @@ export class DialogAddTaskComponent implements OnInit {
     public dialog: MatDialog,
     public auth: AuthenticationService,
     public contactsAPI: ContactsApiService,
-    private http: HttpClient,
     private shared: SharedService,
-    public statusAPI: BoardStatusApiService) {
+    public statusAPI: BoardStatusApiService,
+    private taskAPI: TasksApiService) {
   }
 
   async ngOnInit() {
@@ -114,15 +113,9 @@ export class DialogAddTaskComponent implements OnInit {
       'title': this.task.title,
       'color': this.task.color
     };    
-    this.postTask(body);
+    this.taskAPI.postTask(body);
     this.loadSpinner = true;
     this.afterSaveTask();
-  }
-
-
-  postTask(body) {
-    const url = environment.baseURL + '/tasks/';
-    return lastValueFrom(this.http.post(url, body));
   }
 
 
