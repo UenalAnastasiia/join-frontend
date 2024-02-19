@@ -1,6 +1,6 @@
 export class Contact {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     full_name: string;
     email: string;
     phone: any;
@@ -8,8 +8,8 @@ export class Contact {
     id: string;
 
     constructor(obj?: any) {
-        this.firstName = obj ? obj.firstName : '';
-        this.lastName = obj ? obj.lastName : '';
+        this.first_name = obj ? obj.first_name : '';
+        this.last_name = obj ? obj.last_name : '';
         this.full_name = obj ? obj.full_name : '';
         this.email = obj ? obj.email : '';
         this.phone = obj ? obj.phone : '';
@@ -19,8 +19,8 @@ export class Contact {
 
     public toJSON() {
         return {
-            firstName: this.firstName,
-            lastName: this.lastName,
+            first_name: this.first_name,
+            last_name: this.last_name,
             full_name: this.full_name,
             email: this.email,
             phone: this.phone,

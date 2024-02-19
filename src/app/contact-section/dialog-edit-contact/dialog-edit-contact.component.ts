@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, updateDoc } from '@angular/fire/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { doc, getDoc } from 'firebase/firestore';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { Contact } from 'src/models/contact.class';
 import { ContactsApiService } from 'src/services/contacts-api.service';
@@ -21,45 +19,39 @@ export class DialogEditContactComponent implements OnInit {
   loadSpinner: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogEditContactComponent>,
-    private firestore: Firestore,
     public dialog: MatDialog,
     private messageService: SnackBarService,
     public shared: SharedService,
     private contactsAPI: ContactsApiService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.dialogRef.updateSize('40vw', '');
-    this.loadContact();
-  }
-
-
-  async loadContact() {
-    const docRef = doc(this.firestore, "contacts", this.contactID);
-    const docSnap = await getDoc(docRef);
-    this.contactData = docSnap.data();
+    let contactData = await this.contactsAPI.loadContactFromAPI(this.contactID);
+    this.contactData = contactData[0];    
   }
 
 
   async saveContact() {
     this.loadSpinner = true;
 
-    await updateDoc(doc(this.firestore, "contacts", this.contactData.id),
-      {
-        firstName: this.contactData.firstName,
-        lastName: this.contactData.lastName,
-        full_name: this.contactData.full_name,
-        email: this.contactData.email,
-        phone: this.contactData.phone
-      });
-
+    let body = {
+      'first_name': this.contactData.first_name, 
+      'last_name': this.contactData.last_name, 
+      'email': this.contactData.email, 
+      'phone': this.contactData.phone,
+      'color': this.contactData.color
+    };  
+    
+    this.contactsAPI.patchContact(this.contactData.id, body);
     this.shared.loadContactDetails(this.contactData.id);
+    this.afterSaveContact();
+  }
 
+
+  afterSaveContact() {
     setTimeout(() => {
       this.loadSpinner = false;
       this.dialog.closeAll();
-    }, 2000);
-
-    setTimeout(() => {
       this.messageService.showSnackMessage('Save Changes!');
     }, 2000);
   }

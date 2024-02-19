@@ -7,6 +7,7 @@ import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 import { SnackBarService } from 'src/services/snack-bar.service';
 import { TasksApiService } from 'src/services/tasks-api.service';
 
@@ -36,7 +37,8 @@ export class DialogRequestComponent implements OnInit {
     private messageService: SnackBarService,
     public auth: AuthenticationService,
     private taskAPI: TasksApiService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private contactsAPI: ContactsApiService) { }
 
   ngOnInit(): void {
   }
@@ -107,7 +109,7 @@ export class DialogRequestComponent implements OnInit {
 
 
   async deleteContactDoc() {
-    //this.taskAPI.deleteTask(this.contactID);
+    this.contactsAPI.deleteContact(this.contactID);
     
     setTimeout(() => {
       this.dialog.closeAll();

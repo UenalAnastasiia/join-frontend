@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, addDoc, collection, doc, setDoc } from '@angular/fire/firestore';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { Contact } from 'src/models/contact.class';
+import { ContactsApiService } from 'src/services/contacts-api.service';
 
 
 @Component({
@@ -20,8 +20,8 @@ export class DialogAddContactComponent implements OnInit {
   phone = new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]+')]);
 
   constructor(public dialogRef: MatDialogRef<DialogAddContactComponent>,
-    private firestore: Firestore,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public contactsAPI: ContactsApiService) { }
 
   ngOnInit(): void {
   }
@@ -30,12 +30,19 @@ export class DialogAddContactComponent implements OnInit {
   async saveContact() {
     let color = Math.floor(0x1000000 * Math.random()).toString(16);
     this.contact.color = '#' + ('000000' + color).slice(-6);
+    let body = {
+      'first_name': this.contact.first_name, 
+      'last_name': this.contact.last_name, 
+      'email': this.contact.email, 
+      'phone': this.contact.phone,
+      'color': this.contact.color
+    };    
+    this.contactsAPI.postContact(body);
+    this.afterSaveContact();
+  }
 
-    const taskCollection = collection(this.firestore, 'contacts');
-    const docRef = await addDoc(taskCollection, this.contact.toJSON());
-    this.contact.id = docRef.id;
-    this.contact.full_name = this.contact.firstName + ' ' + this.contact.lastName;
-    await setDoc(doc(this.firestore, 'contacts', docRef.id), this.contact.toJSON());
+  
+  afterSaveContact() {
     this.loadSpinner = true;
 
     setTimeout(() => {
@@ -48,8 +55,8 @@ export class DialogAddContactComponent implements OnInit {
 
 
   clearForm() {
-    this.contact.firstName = '';
-    this.contact.lastName = '';
+    this.contact.first_name = '';
+    this.contact.last_name = '';
     this.contact.email = '';
     this.contact.phone = '';
   }

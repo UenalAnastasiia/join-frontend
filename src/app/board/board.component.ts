@@ -44,9 +44,7 @@ export class BoardComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<string[]>, status) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    if (event.previousContainer !== event.container) {
       this.updateTaskStatus(event.item.data, status);
     }
   }

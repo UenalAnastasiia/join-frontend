@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SharedService } from './shared.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,23 @@ export class ContactsApiService {
       let fullName = contact[0].full_name;
       if (format === 'abbreviation') { return abbrName } else return fullName 
     }
+  }
+
+
+  public postContact(body: { first_name: string; last_name: string; email: string; phone: any; color: any; }) {
+    const url = environment.baseURL + '/contacts/';
+    return lastValueFrom(this.http.post(url, body));
+  }
+
+
+  public patchContact(id: number, body: { first_name: any; last_name: any; email: any; phone: any; color: any; }) {
+    const url = environment.baseURL + `/contacts/${id}/`;
+    return lastValueFrom(this.http.patch(url, body));
+  }
+
+
+  public deleteContact(id: number) {
+    const url = environment.baseURL + `/contacts/${id}/`;
+    return lastValueFrom(this.http.delete(url));
   }
 }
