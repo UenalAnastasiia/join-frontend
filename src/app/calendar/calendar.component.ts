@@ -33,7 +33,7 @@ export class CalendarComponent implements OnInit {
 
 
   renderTasks(allTasks) {
-    this.allTasks = allTasks.filter((data: { status: { name: string; }; }) => data.status.name != 'Archived');
+    this.allTasks = allTasks.filter((data) => data.priority != 'Archived');
   }
 
 

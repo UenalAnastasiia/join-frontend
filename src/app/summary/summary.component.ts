@@ -80,7 +80,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
 
   getTaskLength(taskData: any) {
-    let filterDate = taskData.filter((data: { status: { name: string; }; }) => data.status.name != 'archived');
+    let filterDate = taskData.filter((data) => data.priority != 'archived');
     this.taskLength = filterDate.length;
   }
 

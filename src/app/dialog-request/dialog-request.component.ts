@@ -66,8 +66,7 @@ export class DialogRequestComponent implements OnInit {
 
   async archivedTask() {
     let body = {
-      'priority': 'Archived',
-      'status': 'Archived'
+      'priority': 'Archived'
     };    
 
     this.updateTask(body)

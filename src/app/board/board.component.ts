@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from 'src/models/task.class';
@@ -24,13 +24,8 @@ export class BoardComponent implements OnInit {
   allTasks: any = [];
   allUsers: any = [];
   allContacts: any = [];
-  todoTask: any;
-  inprogressTask: any = [];
-  awaitingfeedbackTask: any = [];
-  doneTask: any = [];
   searchInput: string;
   statusList: any = [];
-  // statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
 
   constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
@@ -45,30 +40,6 @@ export class BoardComponent implements OnInit {
     this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
-    this.renderAllTasks(this.allTasks);   
-  }
-
-
-  renderAllTasks(taskData: any) {
-    let filterDate = taskData.filter((data: { status: { name: string; }; }) => data.status.name != 'Archived');
-    for (let index = 0; index < this.statusList.length; index++) {
-      this.filterTasks(filterDate, this.statusList[index]);
-    }
-  }
-
-
-  filterTasks(tasks: any[], name: string) {
-    let filterData = tasks.filter((obj) => obj.status.name == name);
-    
-    if (name === "To do") {
-      this.todoTask = filterData;
-    } else if (name === "In progress") {
-      this.inprogressTask = filterData;
-    } else if (name === "Awaiting Feedback") {
-      this.awaitingfeedbackTask = filterData;
-    } else if (name === "Done") {
-      this.doneTask = filterData;
-    }
   }
 
 
@@ -78,7 +49,6 @@ export class BoardComponent implements OnInit {
     } else {
       this.updateTaskStatus(event.item.data, status);
     }
-
   }
 
 

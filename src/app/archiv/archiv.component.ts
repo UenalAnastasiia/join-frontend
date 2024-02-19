@@ -33,7 +33,7 @@ export class ArchivComponent implements OnInit {
 
 
   renderArchiv(tasks) {
-    this.archivedTasks = tasks.filter((obj: { status: { name: string; }; }) => obj.status.name == 'Archived');
+    this.archivedTasks = tasks.filter((obj: { priority: string; } ) => obj.priority == 'Archived');
     this.archivedTasks.length === 0 ? this.noTasks = true : this.noTasks = false;
   }
   
