@@ -65,8 +65,8 @@ export class DialogSettingsComponent implements OnInit {
     let filterTasks = Object.keys(tasks).map(i => tasks[i].status == id);
     let result = filterTasks.find(elem => elem === true);
 
-    if (result === true) {
-      this.messageService.showSnackMessage('Board is not empty!');
+    if (result === true || this.statusList.length <= 4) {
+      this.messageService.showSnackMessage('Error, requirements are not met!');
       this.loadSpinner = false;
     } else {
       this.statusAPI.deleteBoardStatus(id);

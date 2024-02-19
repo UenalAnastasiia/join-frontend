@@ -50,8 +50,10 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
     }
 
     .settings-h {
+        align-self: flex-start;
+
         h1 {
-            margin-bottom: 16px;
+            margin-bottom: 8px;
             font-size: 24px;
             border-right: none;
             margin-top: 0;
@@ -59,6 +61,13 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
             color: var(--header);
             font-weight: 600;
 
+        }
+    }
+
+    .board-info {
+        p {
+            margin: 0;
+            color: $textColor !important;
         }
     }
 
