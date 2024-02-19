@@ -84,12 +84,13 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
     justify-content: space-between;
     align-items: center;
     margin-left: 12px;
-    width: 95%;
+    width: 96%;
 
     h1 {
         margin: 0;
         color: var(--header);
         font-weight: 600;
+        font-size: 21px !important;
     }
 
     mat-icon {
@@ -361,5 +362,30 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
 
     mat-icon {
         margin-top: -8px;
+    }
+}
+
+.progress-box-5 {
+    @media (max-width: 1550px) {
+        width: 230px !important;
+    }
+}
+
+.task-card-5 {
+    @media (max-width: 1550px) {
+        width: 206px !important;
+    }
+}
+
+.add-card-5 {
+    @media (max-width: 1550px) {
+        width: 164px !important;
+        padding: 12px !important;
+    }
+}
+
+.task-card-status-5 {
+    @media (max-width: 1550px) {
+        width: 156px !important;
     }
 }

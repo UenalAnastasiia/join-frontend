@@ -10,7 +10,7 @@
                 <input name="search" [(ngModel)]="searchInput" matInput autocomplete="off" placeholder="Search for...">
                 <mat-icon>search</mat-icon>
             </span>
-            <button mat-raised-button (click)="openDialogAddTask('To do')">
+            <button mat-raised-button (click)="openDialogAddTask(statusList[0].id)">
                 Add task
                 <mat-icon>add</mat-icon>
             </button>
@@ -18,11 +18,11 @@
     </div>
 
     <div class="card-body" cdkDropListGroup>
-        <div class="progress-box" *ngFor="let status of statusList">
+        <div [class.progress-box-5]="statusList.length === 5" class="progress-box" *ngFor="let status of statusList">
             <div cdkDropList [cdkDropListData]="status.name" (cdkDropListDropped)="drop($event, status.id)">
                 <div class="progress-header">
                     <h1>{{ status.name }}</h1>
-                    <button mat-icon-button (click)="openDialogAddTask('To do')">
+                    <button mat-icon-button (click)="openDialogAddTask(status.id)">
                         <mat-icon>add_circle</mat-icon>
                     </button>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="task-cards">
                     <div *ngFor="let task of allTasks | filter:searchInput">
                         <div *ngIf="task.status == status.id">
-                            <div class="task-card hide-icons" cdkDrag [cdkDragData]="task.id">
+                            <div class="task-card hide-icons" [class.task-card-5]="statusList.length === 5" cdkDrag [cdkDragData]="task.id">
                                 <div class="hover-icons">
                                     <mat-icon matTooltip="Archived task" matTooltipPosition="above"
                                         matTooltipClass="tooltip-blue" (click)="openDialogArchivedTask(task.id)">delete</mat-icon>
@@ -45,7 +45,7 @@
                                         <mat-icon *ngIf="task.due_date < shared.todayDate">notification_important</mat-icon>
                                     </span>
                                     <h4 class="task-name">{{ task.title }}</h4>
-                                    <div>
+                                    <div [class.task-card-status-5]="statusList.length === 5">
                                         <span class="task-assigned" [ngStyle]="{'background': task.color}">
                                             {{ contactAPI.getContact(task.assigned_to, allContacts, 'abbreviation') }}
                                         </span>
@@ -53,14 +53,15 @@
                                             *ngIf="task.priority==='low'">keyboard_double_arrow_down</mat-icon>
                                         <mat-icon style="color: #FF3D00"
                                             *ngIf="task.priority==='urgent'">keyboard_double_arrow_up</mat-icon>
-                                        <mat-icon style="color: #FFA800" *ngIf="task.priority==='medium'">clear_all</mat-icon>
+                                        <mat-icon style="color: #FFA800" 
+                                            *ngIf="task.priority==='medium'">clear_all</mat-icon>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
     
-                    <div class="add-card" (click)="openDialogAddTask(status.name)">
+                    <div class="add-card" [class.add-card-5]="statusList.length === 5" (click)="openDialogAddTask(status.id)">
                         <span>Create new task</span>
                         <button mat-icon-button>
                             <mat-icon>add_circle</mat-icon>

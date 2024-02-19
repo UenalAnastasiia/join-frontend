@@ -45,7 +45,7 @@ export class SharedService {
 
     if (filterDate.length >= 1) {
       this.deadlineExist = true;
-      let dateMap = filterDate.map((data: any) => data.due_date);
+      let dateMap = filterDate.map((data: any) => data.due_date);      
       this.upcomingDeadline = dateMap[0];
     } else {
       this.deadlineExist = false;

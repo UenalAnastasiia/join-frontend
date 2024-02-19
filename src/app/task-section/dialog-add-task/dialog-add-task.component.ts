@@ -87,9 +87,7 @@ export class DialogAddTaskComponent implements OnInit {
 
   selectOptions() {
     this.task.category = this.selectedCategory;
-    this.task.status = this.task.status;
-    console.log(this.task.status);
-    
+    this.task.status = this.task.status;    
   }
 
   

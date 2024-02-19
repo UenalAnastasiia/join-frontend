@@ -16,22 +16,26 @@ export class SummaryComponent implements OnInit, OnDestroy {
   allTasks: any = [];
   taskLength: number;
   urgentLength: number;
-  toDoLength: number;
-  inProgressLength: number;
-  awaitingFeedbackLength: number;
-  doneLength: number;
   statusList: any = [];
-  statusTasksLength: any = [];
+  statusTasksLength: number[] = [];
+  loadSpinner: boolean = true;
 
 
-  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService, private taskAPI: TasksApiService, public statusAPI: BoardStatusApiService) {
-  }
+  constructor(public router: Router, public shared: SharedService, 
+    public auth: AuthenticationService, 
+    private taskAPI: TasksApiService, 
+    public statusAPI: BoardStatusApiService) { }
+
 
   async ngOnInit() {
     this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
     this.auth.getLoggedUser();
-    this.renderSummary(this.allTasks);
+
+    setTimeout(() => {
+      this.loadSpinner = false;
+      this.renderSummary(this.allTasks);
+    }, 1000);
   }
 
 
@@ -50,7 +54,6 @@ export class SummaryComponent implements OnInit, OnDestroy {
     this.shared.getUpcomingDeadline(fetchedTasks);
     this.getTaskLength(fetchedTasks);
   }
-
 
 
   getTime() {
@@ -84,20 +87,11 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   getTaskStatusLength(statusID: number) {
     let data = this.allTasks.filter(obj => obj.status == statusID);
-
-    if (statusID == this.statusList[0].id) {
-      this.statusTasksLength.push(data.length);
-      //this.toDoLength = data.length;
-    } else if (statusID === this.statusList[1].id) {
-      this.statusTasksLength.push(data.length);
-    } else if (statusID === this.statusList[2].id) {
-      this.statusTasksLength.push(data.length);
-    } else if (statusID === this.statusList[3].id) {
-      this.statusTasksLength.push(data.length);
+    for (let i = 0; i < this.statusList.length; i++) {
+      if (statusID == this.statusList[i].id) {
+        this.statusTasksLength.push(data.length);
+      }
     }
-
-    console.log(this.statusTasksLength);
-    
   }
 
 

@@ -193,3 +193,18 @@ p {
     margin-top: 24px;
     margin-bottom: 48px;
 }
+
+.spinner-box {
+    position: absolute;
+    top: 35% !important;
+    left: 45% !important;
+    height: none !important;
+    width: none !important;
+    z-index: 1;
+    background: none !important;
+}
+
+::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: var(--header);
+}

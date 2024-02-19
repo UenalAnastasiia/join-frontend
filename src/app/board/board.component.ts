@@ -82,9 +82,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  async updateTaskStatus(taskID: any, stat: any) {
-    console.log(taskID, stat);
-    
+  async updateTaskStatus(taskID: any, stat: any) {    
     const url = environment.baseURL + `/tasks/${taskID}/`;
     let body = {status : stat}
     return lastValueFrom(this.http.patch(url, body));

@@ -1,0 +1,55 @@
+<div class="settings-container">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="spinner-box" *ngIf="loadSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="!loadSpinner" class="settings-div">
+        <div class="settings-h">
+            <h1>Board Settings</h1>
+        </div>
+    
+        <div class="settings-box">
+            <span *ngFor="let status of statusList">
+                <mat-form-field class="input-shadow input-box height-36">
+                    <input matInput type="text" value="{{ status.name }}" [(ngModel)]="status.name">
+                </mat-form-field>
+    
+                <button mat-icon-button matTooltip="Save Edit" matTooltipPosition="below" matTooltipClass="tooltip-blue" 
+                    (click)="editBoard(status.name, status.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+        
+                <button mat-icon-button matTooltip="Delete Board" matTooltipPosition="below" matTooltipClass="tooltip-blue"
+                    (click)="checkTasksInBoard(status.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </span>
+        </div>
+
+        <button *ngIf="!showAddBoardInput" mat-icon-button matTooltip="Add Board" matTooltipPosition="below" matTooltipClass="tooltip-blue"
+            (click)="showAddBoardInput = true">
+            <mat-icon>add</mat-icon>
+        </button>
+
+        <div *ngIf="showAddBoardInput">
+            <mat-form-field class="input-shadow input-box height-36">
+                <input matInput type="text" placeholder="Board Name" [(ngModel)]="newStatusName" autocomplete="off">
+            </mat-form-field>
+
+            <button mat-icon-button matTooltip="Save Board" matTooltipPosition="below" matTooltipClass="tooltip-blue"
+                (click)="addBoard(newStatusName)">
+                <mat-icon>done</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="Cancel" matTooltipPosition="below" matTooltipClass="tooltip-blue"
+                (click)="showAddBoardInput = false">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+
+    </div>
+</div>

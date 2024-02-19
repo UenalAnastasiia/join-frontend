@@ -1,4 +1,8 @@
 <mat-card class="container-style container-position">
+    <div class="spinner-box" *ngIf="loadSpinner">
+        <mat-spinner></mat-spinner>
+    </div>
+
     <div class="card-header">
         <div>
             <h1>Summary</h1>
@@ -6,7 +10,7 @@
         </div>
     </div>
 
-    <div class="summary-body">
+    <div class="summary-body" *ngIf="!loadSpinner">
         <div class="summary-cards">
             <div class="task-overview">
                 <mat-card routerLink="/board">

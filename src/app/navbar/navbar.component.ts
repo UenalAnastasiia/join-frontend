@@ -6,6 +6,7 @@ import { DialogAddContactComponent } from '../contact-section/dialog-add-contact
 import { AuthenticationService } from 'src/services/authentication.service';
 import { Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { DialogSettingsComponent } from '../dialog-settings/dialog-settings.component';
 
 
 @Component({
@@ -37,6 +38,11 @@ export class NavbarComponent implements OnInit {
 
   openDialogAddContact() {
     this.dialog.open(DialogAddContactComponent);
+  }
+
+
+  openDialogSettings() {
+    this.dialog.open(DialogSettingsComponent);
   }
 
 

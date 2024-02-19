@@ -49,6 +49,7 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { DataProtectionComponent } from './data-protection/data-protection.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthIntercepterService } from 'src/services/auth-intercepter.service';
+import { DialogSettingsComponent } from './dialog-settings/dialog-settings.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AuthIntercepterService } from 'src/services/auth-intercepter.service';
     SignInComponent,
     HelpInfoComponent,
     ImprintComponent,
-    DataProtectionComponent
+    DataProtectionComponent,
+    DialogSettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,158 @@
+$fontFamily: 'Montserrat', sans-serif;
+$fontSize: 14px;
+$textColor: #6C7587;
+$height: 32px;
+
+$bgColor: #EBECF0;
+$iconColor: #8992A5;
+
+$accentBlue: #1657F0;
+$brightBlue: #36D7E0;
+
+$darkShadow: #484f60;
+$lightShadow: #FFFFFF;
+
+$dropShadow: 8px 8px 12px -2px rgba($darkShadow, 0.4),
+    -6px -6px 12px -1px rgba($lightShadow, 1);
+
+$innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
+    inset 2px 2px 8px -1px rgba($darkShadow, 0.5);
+
+::ng-deep .mat-dialog-container {
+    border-radius: 24px;
+    background-color: $bgColor;
+}
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    .close-btn {
+        position: absolute;
+        right: -16px;
+        top: -20px;
+        color: var(--header);
+    }
+
+    .settings-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .settings-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .settings-h {
+        h1 {
+            margin-bottom: 16px;
+            font-size: 24px;
+            border-right: none;
+            margin-top: 0;
+            margin-left: 12px;
+            color: var(--header);
+            font-weight: 600;
+
+        }
+    }
+
+    // Mixins
+    @mixin size($width, $height: $width) {
+        width: $width;
+        height: $height;
+    }
+
+    @mixin applyFontStyle() {
+        font-family: $fontFamily;
+        font-size: $fontSize;
+        line-height: $fontSize;
+        color: $textColor;
+    }
+
+    %shared-styles {
+        @include applyFontStyle;
+        padding: 0 8px;
+        position: relative;
+        border: 2px solid rgba($lightShadow, 0);
+        outline: none;
+        text-align: start;
+        background-color: $bgColor;
+        transition: all 250ms ease-in-out;
+
+        &:hover {
+            box-shadow: none;
+            border-color: white;
+        }
+    }
+
+    .input-shadow {
+        @extend %shared-styles;
+        box-shadow: $innerShadow;
+        width: 14vw;
+        padding: 10px;
+        border-radius: 12px;
+    
+        &:focus {
+            box-shadow: none;
+            border-color: rgba(var(--header), 0.5);
+        }
+    
+        &::placeholder {
+            @include applyFontStyle;
+            opacity: 1;
+        }
+    
+        mat-hint {
+            font-size: 10px !important;
+        }
+    
+        .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+            height: 36px;
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .height-36 {
+        height: 36px !important;
+    }
+
+    .input-box {
+        margin: 8px;
+    }
+
+    ::ng-deep .mat-icon-button {
+        color: var(--header) !important;
+    }
+
+    ::ng-deep .mat-focused .mat-form-field-label {
+        color: var(--header) !important;
+    }
+    
+    ::ng-deep .mat-form-field-underline {
+        background-color: $bgColor !important;
+    }
+    
+    ::ng-deep .mat-form-field-ripple {
+        background-color: $bgColor !important;
+    }
+    
+    ::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix {
+        display: flex !important;
+    }
+    
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+        color: var(--header) !important;
+    }
+
+    ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+        stroke: var(--header);
+    }
+}
