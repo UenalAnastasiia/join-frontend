@@ -14,14 +14,14 @@
                     <span>Tasks in Board</span>
                 </mat-card>
 
-                <mat-card routerLink="/board">
-                    <span>{{ inProgressLength }}</span> <br>
-                    <span>Tasks in Progress</span>
+                <mat-card routerLink="/board" >
+                    <span>{{ statusTasksLength[1] }}</span> <br>
+                    <span>Tasks {{ statusList[1].name }}</span>
                 </mat-card>
 
                 <mat-card routerLink="/board">
-                    <span>{{ awaitingFeedbackLength }}</span> <br>
-                    <span>Awaiting Feedback</span>
+                    <span>{{ statusTasksLength[2] }}</span> <br>
+                    <span>{{ statusList[2].name }}</span>
                 </mat-card>
             </div>
 
@@ -52,8 +52,8 @@
                         <mat-icon>file_open</mat-icon>
                     </div>
                     <div>
-                        <span>{{ toDoLength }}</span> <br>
-                        <span>To-do</span>
+                        <span>{{ statusTasksLength[0] }}</span> <br>
+                        <span>{{ statusList[0].name }}</span>
                     </div>
                 </mat-card>
 
@@ -62,8 +62,8 @@
                         <mat-icon>check</mat-icon>
                     </div>
                     <div>
-                        <span>{{ doneLength }}</span> <br>
-                        <span>Done</span>
+                        <span>{{ statusTasksLength[3] }}</span> <br>
+                        <span>{{ statusList[3].name }}</span>
                     </div>
                 </mat-card>
             </div>

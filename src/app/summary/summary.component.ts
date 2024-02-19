@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { BoardStatusApiService } from 'src/services/board-status-api.service';
 import { SharedService } from 'src/services/shared.service';
 import { TasksApiService } from 'src/services/tasks-api.service';
 
@@ -19,13 +20,15 @@ export class SummaryComponent implements OnInit, OnDestroy {
   inProgressLength: number;
   awaitingFeedbackLength: number;
   doneLength: number;
-  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
+  statusList: any = [];
+  statusTasksLength: any = [];
 
 
-  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService, private taskAPI: TasksApiService) {
+  constructor(public router: Router, public shared: SharedService, public auth: AuthenticationService, private taskAPI: TasksApiService, public statusAPI: BoardStatusApiService) {
   }
 
   async ngOnInit() {
+    this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
     this.auth.getLoggedUser();
     this.renderSummary(this.allTasks);
@@ -42,7 +45,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
     this.getGreeting(); 
     this.getTaskUrgencyLength();
     for (let index = 0; index < this.statusList.length; index++) {
-      this.getTaskStatusLength(this.statusList[index]);
+      this.getTaskStatusLength(this.statusList[index].id);
     }
     this.shared.getUpcomingDeadline(fetchedTasks);
     this.getTaskLength(fetchedTasks);
@@ -74,23 +77,27 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
 
   getTaskLength(taskData: any) {
-    let filterDate = taskData.filter(data => data.status != 'archived');
+    let filterDate = taskData.filter((data: { status: { name: string; }; }) => data.status.name != 'archived');
     this.taskLength = filterDate.length;
   }
 
 
-  getTaskStatusLength(statusName: string) {
-    let data = this.allTasks.filter(obj => obj.status == statusName);
+  getTaskStatusLength(statusID: number) {
+    let data = this.allTasks.filter(obj => obj.status == statusID);
 
-    if (statusName === 'To do') {
-      this.toDoLength = data.length;
-    } else if (statusName === 'In progress') {
-      this.inProgressLength = data.length;
-    } else if (statusName === 'Awaiting Feedback') {
-      this.awaitingFeedbackLength = data.length;
-    } else if (statusName === 'Done') {
-      this.doneLength = data.length;
+    if (statusID == this.statusList[0].id) {
+      this.statusTasksLength.push(data.length);
+      //this.toDoLength = data.length;
+    } else if (statusID === this.statusList[1].id) {
+      this.statusTasksLength.push(data.length);
+    } else if (statusID === this.statusList[2].id) {
+      this.statusTasksLength.push(data.length);
+    } else if (statusID === this.statusList[3].id) {
+      this.statusTasksLength.push(data.length);
     }
+
+    console.log(this.statusTasksLength);
+    
   }
 
 

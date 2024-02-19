@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { SharedService } from 'src/services/shared.service';
+import { BoardStatusApiService } from 'src/services/board-status-api.service';
 
 @Component({
   selector: 'app-dialog-edit-task',
@@ -38,7 +39,7 @@ export class DialogEditTaskComponent implements OnInit {
   ];
 
   categoryList: any[] = ['Frontend', 'Backend', 'Design', 'Marketing', 'Backoffice', 'Other'];
-  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
+  statusList: any = [];
 
 
   constructor(public dialogRef: MatDialogRef<DialogEditTaskComponent>, 
@@ -47,10 +48,12 @@ export class DialogEditTaskComponent implements OnInit {
     public contactAPI: ContactsApiService,
     private taskAPI: TasksApiService,
     private http: HttpClient,
-    public shared: SharedService) { }
+    public shared: SharedService,
+    public statusAPI: BoardStatusApiService) { }
 
 
   async ngOnInit() {
+    this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     this.dialogRef.updateSize('70vw', '');
     this.renderEditTask();

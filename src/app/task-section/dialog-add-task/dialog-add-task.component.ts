@@ -10,6 +10,7 @@ import { ContactsApiService } from 'src/services/contacts-api.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from 'src/services/shared.service';
+import { BoardStatusApiService } from 'src/services/board-status-api.service';
 
 @Component({
   selector: 'app-dialog-add-task',
@@ -45,7 +46,7 @@ export class DialogAddTaskComponent implements OnInit {
   ];
 
   categoryList: any[] = ['Frontend', 'Backend', 'Design', 'Marketing', 'Backoffice', 'Other'];
-  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback'];
+  statusList: any = [];
 
   title = new FormControl('', [Validators.required, Validators.minLength(1)]);
   description = new FormControl('', [Validators.required, Validators.minLength(1)]);
@@ -59,11 +60,13 @@ export class DialogAddTaskComponent implements OnInit {
     public auth: AuthenticationService,
     public contactsAPI: ContactsApiService,
     private http: HttpClient,
-    private shared: SharedService) {
+    private shared: SharedService,
+    public statusAPI: BoardStatusApiService) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.dialogRef.updateSize('70vw', '');
+    this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.minDate = new Date();
     if (this.taskStatus) {
       this.task.status = this.taskStatus;
@@ -85,6 +88,8 @@ export class DialogAddTaskComponent implements OnInit {
   selectOptions() {
     this.task.category = this.selectedCategory;
     this.task.status = this.task.status;
+    console.log(this.task.status);
+    
   }
 
   

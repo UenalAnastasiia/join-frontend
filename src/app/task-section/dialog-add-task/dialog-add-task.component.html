@@ -70,8 +70,8 @@
 
             <div class="input-box">
                 <select class="description-option input-shadow" [(ngModel)]="task.status" (change)="selectOptions()">
-                    <option value="" disabled selected>Choose status...</option>
-                    <option value="{{ stat }}" *ngFor="let stat of statusList">{{ stat }}</option>
+                    <option [ngValue]="undefined" [disabled]="true">Choose status...</option>
+                    <option *ngFor="let stat of statusList" value="{{ stat.id }}">{{ stat.name }}</option>
                 </select>
             </div>
         </div>

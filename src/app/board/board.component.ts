@@ -11,6 +11,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TasksApiService } from 'src/services/tasks-api.service';
 import { ContactsApiService } from 'src/services/contacts-api.service';
+import { BoardStatusApiService } from 'src/services/board-status-api.service';
 
 @Component({
   selector: 'app-board',
@@ -20,6 +21,7 @@ import { ContactsApiService } from 'src/services/contacts-api.service';
 })
 export class BoardComponent implements OnInit {
   task: Task = new Task();
+  allTasks: any = [];
   allUsers: any = [];
   allContacts: any = [];
   todoTask: any;
@@ -27,12 +29,12 @@ export class BoardComponent implements OnInit {
   awaitingfeedbackTask: any = [];
   doneTask: any = [];
   searchInput: string;
-
-  statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
+  statusList: any = [];
+  // statusList: any[] = ['To do', 'In progress', 'Awaiting Feedback', 'Done'];
 
 
   constructor(public dialog: MatDialog, public shared: SharedService, private http: HttpClient, private taskAPI: TasksApiService,
-    public contactAPI: ContactsApiService) { }
+    public contactAPI: ContactsApiService, public statusAPI: BoardStatusApiService) { }
 
   ngOnInit() {
     this.renderBoard();
@@ -40,15 +42,15 @@ export class BoardComponent implements OnInit {
 
 
   async renderBoard() {
+    this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
-    let allTasks = await this.taskAPI.loadAllTasksFromAPI();
-    this.renderAllTasks(allTasks);   
+    this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
+    this.renderAllTasks(this.allTasks);   
   }
 
 
   renderAllTasks(taskData: any) {
-    let filterDate = taskData.filter((data: { status: string; }) => data.status != 'Archived');
-
+    let filterDate = taskData.filter((data: { status: { name: string; }; }) => data.status.name != 'Archived');
     for (let index = 0; index < this.statusList.length; index++) {
       this.filterTasks(filterDate, this.statusList[index]);
     }
@@ -56,7 +58,7 @@ export class BoardComponent implements OnInit {
 
 
   filterTasks(tasks: any[], name: string) {
-    let filterData = tasks.filter((obj: { status: string; }) => obj.status == name);
+    let filterData = tasks.filter((obj) => obj.status.name == name);
     
     if (name === "To do") {
       this.todoTask = filterData;
@@ -70,22 +72,22 @@ export class BoardComponent implements OnInit {
   }
 
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>, status) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-      this.updateTaskStatus(event.container.data[event.currentIndex]['id'], event.container.id);
+      this.updateTaskStatus(event.item.data, status);
     }
+
   }
 
 
-  async updateTaskStatus(taskID: any, stat: string) {
+  async updateTaskStatus(taskID: any, stat: any) {
+    console.log(taskID, stat);
+    
     const url = environment.baseURL + `/tasks/${taskID}/`;
-    return lastValueFrom(this.http.patch(url, {status: stat}));
+    let body = {status : stat}
+    return lastValueFrom(this.http.patch(url, body));
   }
 
 
