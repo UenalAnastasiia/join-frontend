@@ -36,7 +36,7 @@ export class BoardComponent implements OnInit {
   async renderBoard() {
     this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
-    this.allTasks = await this.taskAPI.loadAllTasksFromAPI();
+    this.allTasks = await this.taskAPI.loadAllTasksFromAPI();    
   }
 
 

@@ -33,10 +33,10 @@ export class SharedService {
 
 
   async renderTasksFromContact(allTasks) {
-    // let filterData = allTasks.filter((data: any) => data.assigned_to === this.contactsAPI.contactData.id && data.status != 'Archived');
-    // this.taskLength = filterData.length;
-    // this.contactTasks = filterData;
-    // this.getUpcomingDeadline(filterData);
+    let filterData = allTasks.filter((data: any) => data.assigned_to === this.contactsAPI.contactData.id && data.priority != 'Archived');
+    this.taskLength = filterData.length;
+    this.contactTasks = filterData;
+    this.getUpcomingDeadline(filterData);
   }
 
 

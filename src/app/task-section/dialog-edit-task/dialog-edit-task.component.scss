@@ -199,7 +199,6 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
         }
     }
     
-    
     // Mixins
     @mixin size($width, $height: $width) {
         width: $width;
@@ -330,19 +329,11 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
     }
 }
 
-.spinner-box {
-    position: absolute;
-    top: 0;
-    z-index: 2;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffffb5;
-    left: 0;
-}
-
 .mat-progress-spinner circle, .mat-spinner circle {
     stroke: var(--header);
+}
+
+.spinner-box {
+    display: flex;
+    justify-content: center;
 }

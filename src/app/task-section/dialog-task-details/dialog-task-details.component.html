@@ -1,67 +1,73 @@
-<div class="details-task-container" *ngIf="showData">
+<div class="details-task-container">
     <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
         <mat-icon>close</mat-icon>
     </button>
 
-    <div class="task-box">
-        <span class="category-box" [style.background-color]="shared.getCategoryColor(taskData.category)">
-            {{ taskData.category }}
-        </span>
+    <div class="spinner-box" *ngIf="!showData">
+        <mat-spinner></mat-spinner>
+    </div>
 
-        <span>
-            <h1>{{ taskData.title }}</h1>
-        </span>
-
-        <span class="description-box">
-            <p>{{ taskData.description }}</p>
-        </span>
-
-        <span class="date-span">
-            <p>Due date:</p>
-            <p>{{ taskData.due_date | date: "MMM" }} {{ taskData.due_date | date: "dd" }}, {{ taskData.due_date | date:"yyyy" }}</p>
-            <span *ngIf="taskData.due_date < shared.todayDate">
-                <mat-icon>notification_important</mat-icon>
-                Deadline has been exceeded!
+    <div *ngIf="showData">
+        <div class="task-box">
+            <span class="category-box" [style.background-color]="shared.getCategoryColor(taskData.category)">
+                {{ taskData.category }}
             </span>
-        </span>
-
-        <span>
-            <p>Priority:</p>
-            <p class="capitalize">{{ taskData.priority }}</p>
-        </span>
-
-        <span>
-            <p>Status:</p>
-            <p>{{ taskData.status_data.name }}</p>
-        </span>
-
-        <span>
-            <p>Assigned To:</p>
-            <p [ngStyle]="{'color': taskData.color}">{{ contactAPI.getContact(taskData.assigned_to, allContacts, 'full') }}</p>
-        </span>
-
-        <span>
-            <p>Editor:</p>
-            <p>{{ taskData.editor_data.first_name }} {{ taskData.editor_data.last_name }}</p>
-        </span>
-    </div>
-
-    <div class="button-box" *ngIf="!shared.archivDialog">
-        <div (click)="openDialogEditTask(taskData.id)" matTooltip="Edit" matTooltipPosition="below"
-            matTooltipClass="tooltip-blue">
-            <mat-icon>edit</mat-icon>
+    
+            <span>
+                <h1>{{ taskData.title }}</h1>
+            </span>
+    
+            <span class="description-box">
+                <p>{{ taskData.description }}</p>
+            </span>
+    
+            <span class="date-span">
+                <p>Due date:</p>
+                <p>{{ taskData.due_date | date: "MMM" }} {{ taskData.due_date | date: "dd" }}, {{ taskData.due_date | date:"yyyy" }}</p>
+                <span *ngIf="taskData.due_date < shared.todayDate">
+                    <mat-icon>notification_important</mat-icon>
+                    Deadline has been exceeded!
+                </span>
+            </span>
+    
+            <span>
+                <p>Priority:</p>
+                <p class="capitalize">{{ taskData.priority }}</p>
+            </span>
+    
+            <span>
+                <p>Status:</p>
+                <p>{{ taskData.status_data.name }}</p>
+            </span>
+    
+            <span>
+                <p>Assigned To:</p>
+                <p [ngStyle]="{'color': taskData.color}">{{ contactAPI.getContact(taskData.assigned_to, allContacts, 'full') }}</p>
+            </span>
+    
+            <span>
+                <p>Editor:</p>
+                <p>{{ taskData.editor_data.first_name }} {{ taskData.editor_data.last_name }}</p>
+            </span>
         </div>
-    </div>
-
-    <div class="button-box" *ngIf="shared.archivDialog">
-        <div (click)="saveTaskFromArchivToBoard(taskData.id)" matTooltip="Save to Board" matTooltipPosition="below"
-            matTooltipClass="tooltip-blue" class="mr-16">
-            <mat-icon>update</mat-icon>
+    
+        <div class="button-box" *ngIf="!shared.archivDialog">
+            <div (click)="openDialogEditTask(taskData.id)" matTooltip="Edit" matTooltipPosition="below"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>edit</mat-icon>
+            </div>
         </div>
-
-        <div (click)="openDialogDeleteTask(taskData.id)" matTooltip="Delete Task" matTooltipPosition="below"
-            matTooltipClass="tooltip-blue">
-            <mat-icon>delete</mat-icon>
+    
+        <div class="button-box" *ngIf="shared.archivDialog">
+            <div (click)="saveTaskFromArchivToBoard(taskData.id)" matTooltip="Save to Board" matTooltipPosition="below"
+                matTooltipClass="tooltip-blue" class="mr-16">
+                <mat-icon>update</mat-icon>
+            </div>
+    
+            <div (click)="openDialogDeleteTask(taskData.id)" matTooltip="Delete Task" matTooltipPosition="below"
+                matTooltipClass="tooltip-blue">
+                <mat-icon>delete</mat-icon>
+            </div>
         </div>
     </div>
 </div>

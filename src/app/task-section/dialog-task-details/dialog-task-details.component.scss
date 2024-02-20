@@ -128,6 +128,11 @@ $innerShadow: inset -4px -4px 6px -1px rgba($lightShadow, 1),
             }
         }
     }
+
+    .spinner-box {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 // Mixins
