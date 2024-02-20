@@ -22,6 +22,7 @@ export class AuthenticationService {
   userImg: any;
   userEmail: string;
   errorResetMessage: any;
+  error: string;
 
   constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient, 
     public shared: SharedService, private userAPI: UsersApiService) { }
@@ -37,8 +38,16 @@ export class AuthenticationService {
   }
 
 
-  register({ email, password }: any) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  register(body) {
+    try {
+      const url = environment.baseURL + '/register/';
+      return lastValueFrom(this.http.post(url, body));
+    } catch(e) {
+      this.error = e;
+      console.log('Fehler ', e);
+      
+      return this.error
+    }
   }
 
 
