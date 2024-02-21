@@ -47,11 +47,6 @@
             </p>
 
             <div class="login-options-btn">
-                <button mat-button (click)="signInWithGoogle()">
-                    <img src="/../assets/img/google.png">
-                    Login with Google
-                </button>
-
                 <button mat-button (click)="guestLogin()">
                     <mat-icon class="icon-guest">psychology_alt</mat-icon> Login as Guest
                 </button>
@@ -63,9 +58,9 @@
                 <button mat-button routerLink="/register" class="text-danger">Sign up</button>
             </label>
 
-            <label class="form-label"> Forgot password?
+            <!-- <label class="form-label"> Forgot password?
                 <button mat-button (click)="openDialogResetPassword()" class="text-danger">Reset password</button>
-            </label>
+            </label> -->
         </p>
     </mat-card>
 </div>

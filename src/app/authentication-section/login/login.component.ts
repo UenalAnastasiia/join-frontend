@@ -43,16 +43,6 @@ export class LoginComponent implements OnInit {
   }
 
 
-  signInWithGoogle() {
-    this.auth.loginWithGoogle()
-      .then(() => {
-        //this.auth.getLoggedUser();
-        window.location.href = '/summary';
-      })
-      .catch(error => this.error = error);
-  }
-
-
   guestLogin() {
     const auth = getAuth();
     signInAnonymously(auth)

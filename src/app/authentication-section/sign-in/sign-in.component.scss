@@ -244,3 +244,9 @@ mat-form-field {
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
     color: var(--header) !important;
 }
+
+.user-error {
+    width: 25vw;
+    color: red;
+    margin-left: 10vw;  
+}

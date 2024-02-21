@@ -48,7 +48,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ImprintComponent } from './imprint/imprint.component';
 import { DataProtectionComponent } from './data-protection/data-protection.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthIntercepterService } from 'src/services/auth-intercepter.service';
+import { AuthIntercepterService } from 'src/intercepters/auth-intercepter.service';
 import { DialogSettingsComponent } from './dialog-settings/dialog-settings.component';
 
 @NgModule({

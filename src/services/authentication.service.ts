@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  Auth, createUserWithEmailAndPassword, signOut,
-  signInWithPopup, GoogleAuthProvider
-} from '@angular/fire/auth';
-import { getAuth, onAuthStateChanged, sendPasswordResetEmail } from 'firebase/auth';
-import { SnackBarService } from './snack-bar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from './shared.service';
 import { UsersApiService } from './users-api.service';
@@ -24,7 +18,7 @@ export class AuthenticationService {
   errorResetMessage: any;
   error: string;
 
-  constructor(private auth: Auth, private messageService: SnackBarService, public dialog: MatDialog, private http: HttpClient, 
+  constructor(public dialog: MatDialog, private http: HttpClient, 
     public shared: SharedService, private userAPI: UsersApiService) { }
 
 
@@ -38,21 +32,9 @@ export class AuthenticationService {
   }
 
 
-  register(body) {
-    try {
-      const url = environment.baseURL + '/register/';
-      return lastValueFrom(this.http.post(url, body));
-    } catch(e) {
-      this.error = e;
-      console.log('Fehler ', e);
-      
-      return this.error
-    }
-  }
-
-
-  loginWithGoogle() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider());
+  register(body): Observable<any> {
+    const url = environment.baseURL + '/register/';
+    return this.http.post(url, body);
   }
 
 
@@ -72,21 +54,5 @@ export class AuthenticationService {
       this.userEmail = loggedUser[0]['email'];
       //this.userImg
     } 
-  }
-
-
-  resetPassword(email: any) {
-    const auth = getAuth();
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        this.messageService.showSnackMessage('E-Mail was send!');
-        setTimeout(() => {
-          this.dialog.closeAll();
-        }, 1000);
-
-      })
-      .catch((error) => {
-        this.errorResetMessage = error.message;
-      });
   }
 }

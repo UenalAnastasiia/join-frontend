@@ -69,9 +69,15 @@
                 </label>
             </p>
 
-            <p *ngIf="service.error" class="error user-error"> <mat-icon color="warn">warning</mat-icon>
-                {{ service.error }}
+            <p *ngIf="error" class="error user-error">
+                {{ error | json }}
             </p>
+
+            <!-- <span *ngIf="error" class="error user-error"> <mat-icon color="warn">warning</mat-icon>
+                <p *ngFor="let err of error">
+                    {{ err }}
+                </p>
+            </span> -->
         </mat-card-content>
     </mat-card>
 </div>
