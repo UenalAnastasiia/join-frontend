@@ -33,6 +33,7 @@ export class DialogEditContactComponent implements OnInit {
 
   async saveContact() {
     this.loadSpinner = true;
+    this.dialogRef.updateSize('0', '0');
 
     let body = {
       'first_name': this.contactData.first_name, 

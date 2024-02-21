@@ -21,10 +21,10 @@ export class DialogSettingsComponent implements OnInit {
 
   async ngOnInit() {
     this.statusList = await this.statusAPI.loadAllStatusFromAPI();
-    this.dialogRef.updateSize('30vw', '');
 
     setTimeout(() => {
       this.loadSpinner = false;
+      this.dialogRef.updateSize('30vw', '');
     }, 1000);
   }
 

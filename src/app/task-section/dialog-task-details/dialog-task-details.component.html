@@ -1,13 +1,13 @@
-<div class="details-task-container">
+<div class="spinner-box" *ngIf="!showData">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="details-task-container" *ngIf="showData">
     <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
         <mat-icon>close</mat-icon>
     </button>
 
-    <div class="spinner-box" *ngIf="!showData">
-        <mat-spinner></mat-spinner>
-    </div>
-
-    <div *ngIf="showData">
+    <div>
         <div class="task-box">
             <span class="category-box" [style.background-color]="shared.getCategoryColor(taskData.category)">
                 {{ taskData.category }}

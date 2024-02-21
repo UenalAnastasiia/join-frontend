@@ -32,11 +32,11 @@ export class DialogTaskDetailsComponent implements OnInit {
 
   
   async ngOnInit() {
-    this.dialogRef.updateSize('35vw', '');
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
     this.loadTask();
     setTimeout(() => {
       this.showData = true;
+      this.dialogRef.updateSize('35vw', '');
     }, 1000);
   }
 

@@ -2,7 +2,7 @@
     <mat-spinner></mat-spinner>
 </div>
 
-<div class="edit-contact-container"  *ngIf="contactData">
+<div class="edit-contact-container"  *ngIf="contactData && !loadSpinner">
     <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
         <mat-icon>close</mat-icon>
     </button>

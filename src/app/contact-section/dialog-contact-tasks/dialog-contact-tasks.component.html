@@ -1,13 +1,13 @@
-<div class="contactTasks-container">
+<div class="spinner-box" *ngIf="loadSpinner">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="contactTasks-container" *ngIf="!loadSpinner">
     <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
         <mat-icon>close</mat-icon>
     </button>
 
-    <div class="spinner-box" *ngIf="loadSpinner">
-        <mat-spinner></mat-spinner>
-    </div>
-
-    <div *ngIf="!loadSpinner">
+    <div>
         <h2>Tasks for {{ contactName }}</h2>
 
         <div class="tasks-box">

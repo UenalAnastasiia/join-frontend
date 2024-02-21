@@ -51,12 +51,12 @@ export class DialogEditTaskComponent implements OnInit {
   async ngOnInit() {
     this.statusList = await this.statusAPI.loadAllStatusFromAPI();
     this.allContacts = await this.contactAPI.loadAllContactsFromAPI();
-    this.dialogRef.updateSize('70vw', '');
     this.renderEditTask();
     this.minDate = new Date();
 
     setTimeout(() => {
       this.showData = true;
+      this.dialogRef.updateSize('70vw', '');
     }, 1000);
   }
 
