@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { getAuth, signInAnonymously } from "firebase/auth";
 import { DialogRequestComponent } from 'src/app/dialog-request/dialog-request.component';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharedService } from 'src/services/shared.service';
@@ -19,7 +17,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
 
-  constructor(public auth: AuthenticationService, public shared: SharedService, public dialog: MatDialog, private router: Router) {
+  constructor(public auth: AuthenticationService, public shared: SharedService, public dialog: MatDialog) {
     this.formLogin = new FormGroup({
       email: new FormControl(),
       password: new FormControl()
@@ -27,36 +25,35 @@ export class LoginComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 
-  async loginUser() {
-    try {
-      let resp: any = await this.auth.loginWithUsernameAndPassword(this.username, this.password);
-      localStorage.setItem('user', JSON.stringify({token: resp['token'], id: resp['user_id']}));
-      window.location.href = '/summary';
-    } catch(e) {
-      this.error = e;
-      console.error('Error in fetch token: ', e);    
-    }
+  loginUser() {
+    this.auth.loginWithUsernameAndPassword(this.username, this.password).subscribe({
+      next: (response) => {
+        localStorage.setItem('user', JSON.stringify({token: response['token'], id: response['user_id']}));
+      },
+      error: (e) => {
+        this.error = 'Username or password is wrong!';
+      },
+      complete: () => {
+        window.location.href = '/summary';
+      }
+    })     
   }
 
 
   guestLogin() {
-    const auth = getAuth();
-    signInAnonymously(auth)
-      .then(() => {
+    this.auth.loginWithUsernameAndPassword('Guest', 'test123test123').subscribe({
+      next: (response) => {
+        localStorage.setItem('user', JSON.stringify({token: response['token'], id: response['user_id']}));
+      },
+      error: (e) => {
+        this.error = 'Username or password is wrong!';
+      },
+      complete: () => {
         window.location.href = '/summary';
-      })
-      .catch((error) => {
-        this.error = error;
-      });
-  }
-
-
-  openDialogResetPassword() {
-    const dialog = this.dialog.open(DialogRequestComponent);
-    dialog.componentInstance.showResetPassword();
+      }
+    })     
   }
 }

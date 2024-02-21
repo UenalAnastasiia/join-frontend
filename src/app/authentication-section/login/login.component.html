@@ -31,7 +31,7 @@
                     </mat-form-field>
                 </p>
 
-                <p *ngIf="error" class="error">
+                <p *ngIf="error" class="error" style="color: red;">
                     {{ error }}
                 </p>
 
@@ -57,10 +57,6 @@
             <label class="form-label"> Don't have an account?
                 <button mat-button routerLink="/register" class="text-danger">Sign up</button>
             </label>
-
-            <!-- <label class="form-label"> Forgot password?
-                <button mat-button (click)="openDialogResetPassword()" class="text-danger">Reset password</button>
-            </label> -->
         </p>
     </mat-card>
 </div>

@@ -30,16 +30,14 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    console.log(this.formReg.controls['first_name'].value);
-    
+  onSubmit() { 
     this.service.register(this.formReg.value).subscribe({
       next: (response) => {
         this.messageService.showSnackMessage('User created!');
         this.createContact();
       },
       error: (error) => {
-        this.error = error.error
+        this.error = error.error;
       },
       complete: () => {
         window.location.href = '/login';
