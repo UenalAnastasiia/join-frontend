@@ -17,7 +17,7 @@ export class SignInComponent implements OnInit {
   user = new User();
   userNameExist: boolean;
 
-  constructor(public service: AuthenticationService, private router: Router, private messageService: SnackBarService, public contactsAPI: ContactsApiService) { }
+  constructor(public service: AuthenticationService, private messageService: SnackBarService, public contactsAPI: ContactsApiService) { }
 
   ngOnInit(): void {
     this.formReg = new FormGroup({

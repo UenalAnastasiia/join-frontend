@@ -11,8 +11,6 @@ import { ContactsApiService } from 'src/services/contacts-api.service';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
-  // contact: Contact = new Contact();
-  // allContacts$: Observable<any>;
   allContacts: any = [];
   currentAlphabet: any;
   showDetails: boolean = false;

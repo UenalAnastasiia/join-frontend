@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { collectionData, Firestore, collection, query, where } from '@angular/fire/firestore';
 import { Task } from 'src/models/task.class';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,7 +22,7 @@ export class ArchivComponent implements OnInit {
   noTasks: boolean = true;
   allContacts: any = [];
 
-  constructor(private firestore: Firestore, public dialog: MatDialog, public shared: SharedService, private taskAPI: TasksApiService, public contactAPI: ContactsApiService) { }
+  constructor(public dialog: MatDialog, public shared: SharedService, private taskAPI: TasksApiService, public contactAPI: ContactsApiService) { }
 
   async ngOnInit() {
     let taskData = await this.taskAPI.loadAllTasksFromAPI();
@@ -58,6 +57,4 @@ export class ArchivComponent implements OnInit {
     dialog.componentInstance.showDeleteAllTasksFromArchivRequest();
     dialog.componentInstance.allTasksData = taskData;
   }
-
-
 }
