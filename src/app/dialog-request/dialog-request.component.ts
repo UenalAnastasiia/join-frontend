@@ -63,7 +63,7 @@ export class DialogRequestComponent implements OnInit {
     let body = {
       'priority': 'Archived'
     };    
-    this.taskAPI.patchTask(this.archivedID, body);
+    this.taskAPI.patchTask(this.archivedID, body, 'status');
     this.messageService.showSnackMessage('Task has been archived!');
 
     setTimeout(() => {

@@ -25,18 +25,23 @@ export class TasksApiService {
 
   postTask(body: { assigned_to: string; category: string; description: string; due_date: any; editor: any; priority: string; status: string; title: string; color: any; }) {
     const url = environment.baseURL + '/tasks/';
-    return lastValueFrom(this.http.post(url, body));
+    lastValueFrom(this.http.post(url, body));
+    window.location.reload();
   }
 
 
   public deleteTask(id: number) {
     const url = environment.baseURL + `/tasks/${id}/`;
-    return lastValueFrom(this.http.delete(url));
+    lastValueFrom(this.http.delete(url));
+    window.location.reload();
   }
 
 
-  public patchTask(id: number, body: { priority?: any; assigned_to?: any; color?: any; category?: any; description?: any; due_date?: any; status?: any; title?: any; }) {
+  public patchTask(id: number, body: { priority?: any; assigned_to?: any; color?: any; category?: any; description?: any; due_date?: any; status?: any; title?: any; }, check: string) {
     const url = environment.baseURL + `/tasks/${id}/`;
-    return lastValueFrom(this.http.patch(url, body));
+    lastValueFrom(this.http.patch(url, body));
+    if (check !== 'drop status') {
+      window.location.reload();
+    }
   }
 }

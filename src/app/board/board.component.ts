@@ -49,7 +49,8 @@ export class BoardComponent implements OnInit {
 
   updateTaskStatus(taskID: any, stat: any) {    
     let body = {status : stat};
-    this.taskAPI.patchTask(taskID, body);
+    this.taskAPI.patchTask(taskID, body, 'drop status');
+    this.renderBoard();
   }
 
 

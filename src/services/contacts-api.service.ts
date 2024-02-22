@@ -38,18 +38,21 @@ export class ContactsApiService {
 
   public postContact(body: { first_name: string; last_name: string; email: string; phone: any; color: any; }) {
     const url = environment.baseURL + '/contacts/';
-    return lastValueFrom(this.http.post(url, body));
+    lastValueFrom(this.http.post(url, body));
+    window.location.reload();
   }
 
 
   public patchContact(id: number, body: { first_name: any; last_name: any; email: any; phone: any; color: any; }) {
     const url = environment.baseURL + `/contacts/${id}/`;
-    return lastValueFrom(this.http.patch(url, body));
+    lastValueFrom(this.http.patch(url, body));
+    window.location.reload();
   }
 
 
   public deleteContact(id: number) {
     const url = environment.baseURL + `/contacts/${id}/`;
-    return lastValueFrom(this.http.delete(url));
+    lastValueFrom(this.http.delete(url));
+    window.location.reload();
   }
 }

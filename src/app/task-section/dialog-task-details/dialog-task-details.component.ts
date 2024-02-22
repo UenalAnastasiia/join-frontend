@@ -64,7 +64,7 @@ export class DialogTaskDetailsComponent implements OnInit {
     let body = {
       'priority': 'medium'
     };    
-    this.taskAPI.patchTask(id, body);
+    this.taskAPI.patchTask(id, body, 'status');
     this.messageService.showSnackMessage('Task saved in Board!');
 
     setTimeout(() => {

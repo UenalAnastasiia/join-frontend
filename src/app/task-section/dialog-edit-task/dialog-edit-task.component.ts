@@ -107,7 +107,7 @@ export class DialogEditTaskComponent implements OnInit {
       'title': this.taskData.title
     };   
     
-    this.taskAPI.patchTask(this.taskData.id, body);
+    this.taskAPI.patchTask(this.taskData.id, body, 'status');
   }
 
 
