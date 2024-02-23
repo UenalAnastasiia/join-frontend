@@ -40,7 +40,9 @@ export class SignInComponent implements OnInit {
         this.error = error.error;
       },
       complete: () => {
-        window.location.href = '/login';
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1000);
       }
     })     
   }
