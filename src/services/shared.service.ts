@@ -41,7 +41,7 @@ export class SharedService {
 
 
   public getUpcomingDeadline(taskData: any) {
-    let filterDate = taskData.filter((data: any) => data.due_date > this.todayDate && data.priority != 'Archived');
+    let filterDate = taskData.filter((data: any) => data.due_date >= this.todayDate && data.priority != 'Archived');
 
     if (filterDate.length >= 1) {
       this.deadlineExist = true;

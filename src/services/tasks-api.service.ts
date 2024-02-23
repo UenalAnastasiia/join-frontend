@@ -25,15 +25,21 @@ export class TasksApiService {
 
   postTask(body: { assigned_to: string; category: string; description: string; due_date: any; editor: any; priority: string; status: string; title: string; color: any; }) {
     const url = environment.baseURL + '/tasks/';
+    console.log('Task: ', body);
+    
     lastValueFrom(this.http.post(url, body));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
 
   public deleteTask(id: number) {
     const url = environment.baseURL + `/tasks/${id}/`;
     lastValueFrom(this.http.delete(url));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
 
@@ -41,7 +47,9 @@ export class TasksApiService {
     const url = environment.baseURL + `/tasks/${id}/`;
     lastValueFrom(this.http.patch(url, body));
     if (check !== 'drop status') {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 }

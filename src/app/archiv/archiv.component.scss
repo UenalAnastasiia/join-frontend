@@ -149,6 +149,7 @@ h2 {
 .task-name {
     color: var(--font);
     margin: 0;
+    margin-bottom: 10px !important;
     font-weight: 600;
 }
 
@@ -270,4 +271,12 @@ h2 {
 
 .noTasks-box {
     margin-left: 8px;
+}
+
+.bg-past {
+    color: red !important;
+
+    mat-icon {
+        margin-top: -8px;
+    }
 }

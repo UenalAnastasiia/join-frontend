@@ -39,20 +39,26 @@ export class ContactsApiService {
   public postContact(body: { first_name: string; last_name: string; email: string; phone: any; color: any; }) {
     const url = environment.baseURL + '/contacts/';
     lastValueFrom(this.http.post(url, body));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
 
   public patchContact(id: number, body: { first_name: any; last_name: any; email: any; phone: any; color: any; }) {
     const url = environment.baseURL + `/contacts/${id}/`;
     lastValueFrom(this.http.patch(url, body));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
 
   public deleteContact(id: number) {
     const url = environment.baseURL + `/contacts/${id}/`;
     lastValueFrom(this.http.delete(url));
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 }

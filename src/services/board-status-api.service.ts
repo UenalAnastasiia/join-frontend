@@ -39,12 +39,20 @@ export class BoardStatusApiService {
       'name': boardName, 
     };    
     const url = environment.baseURL + `/status/${id}/`;
-    return lastValueFrom(this.http.patch(url, body));
+    lastValueFrom(this.http.patch(url, body));
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
 
   public deleteBoardStatus(id: number) {
     const url = environment.baseURL + `/status/${id}/`;
-    return lastValueFrom(this.http.delete(url));
+    lastValueFrom(this.http.delete(url));
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 }

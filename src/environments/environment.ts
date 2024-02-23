@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: 'https://anastasiiarest.pythonanywhere.com',
   firebase: {
     projectId: 'joina-b265d',
     appId: '1:303399824166:web:60dbbb7470f2f977bcefe7',

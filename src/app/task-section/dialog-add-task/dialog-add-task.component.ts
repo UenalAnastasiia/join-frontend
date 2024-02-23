@@ -112,7 +112,9 @@ export class DialogAddTaskComponent implements OnInit {
       'status': this.task.status,
       'title': this.task.title,
       'color': this.task.color
-    };    
+    };   
+    console.log('Task: ', body);
+     
     this.taskAPI.postTask(body);
     this.loadSpinner = true;
     this.afterSaveTask();
